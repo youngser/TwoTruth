@@ -2,6 +2,17 @@ Package: TwoTruth
 Type: Package
 Title: On a `Two Truths` Phenomenon in Spectral Graph Clustering
 Version: 0.1.0
+Imports:
+    igraph,
+    Matrix,
+    lattice,
+    mclust,
+    irlba,
+    reshape2,
+    colorRamps,
+    tidyverse,
+    latex2exp,
+    ggExtra
 Author: Youngser Park
 Maintainer: Youngser Park <youngser@jhu.edu>
 Description: Functions to reproduce the figures in the `Two Truth` paper.
@@ -9,4 +20,5 @@ License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr

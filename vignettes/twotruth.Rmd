@@ -1,0 +1,108 @@
+---
+title: "On a `Two Truths` Phenomenon in Spectral Graph Clustering"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{TwoTruth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE, results='asis'}
+library(knitr)
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE,warning=FALSE)
+
+opts_knit$set(aliases=c(h='fig.height', w='fig.width', cap='fig.cap', scap='fig.scap'))                                                                               
+opts_knit$set(eval.after = c('fig.cap','fig.scap'))                                                                            
+knit_hooks$set(document = function(x) {                                                                                        
+          gsub('(\\\\end\\{knitrout\\}[\n]+)', '\\1\\\\noindent ', x)                                                                  
+          })
+
+ fn = local({
+   i = 0
+   function(x) {
+     i <<- i + 1
+#     paste('Figure ', i, ': ', x, sep = '')
+     paste('', '', x, sep = '')
+   }
+ })
+
+```
+
+**[Department of Applied Mathematics and Statistics](http://engineering.jhu.edu/ams/)**      
+**[Center for Imaging Science](http://www.cis.jhu.edu)**  
+**[Department of Biomedical Engineering](http://engineering.jhu.edu/bme/)**      
+**[Human Language Technology Center of Excellence](http://hltcoe.jhu.edu)**  
+**[Johns Hopkins University](http://www.jhu.edu)**  
+and  
+**[University of Massachusetts, Amherst, MA](http://umass.edu)**  
+and  
+**[Institute for Defense Analyses, Center for Computing Science]()**  
+
+-----
+
+> Carey E. Priebe, Youngser Park, Joshua T. Vogelstein, John M. Conroy, Vince Lyzinskic, Minh Tang, Avanti Athreya, Joshua Cape, and Eric Bridgeford, "[On a 'Two Truths' Phenomenon in Spectral Graph Clustering](http://arxiv.org/abs/xxxx)," _Proceedings of National Academy of Science_, submitted, 2018.
+
+
+# Abstract
+
+Clustering is concerned with coherently grouping observations without any explicit concept of true groupings. Spectral graph clustering -- clustering the vertices of a graph based on their spectral embedding -- is commonly approached via K-means (or, more generally, Gaussian mixture model) clustering composed with either Laplacian or Adjacency spectral embedding (LSE or ASE).
+Recent theoretical results provide new understanding of the problem and solutions, and lead us to a 'Two Truths' LSE vs. ASE spectral graph clustering phenomenon
+convincingly illustrated here via a diffusion MRI connectome data set:
+ the different embedding methods yield different clustering results,
+ with LSE capturing left hemisphere/right hemisphere affinity structure
+ and ASE capturing gray matter/white matter core-periphery structure.
+ 
+> **Keywords**: Spectral Embedding, Spectral Clustering, Graph, Network, Connectome
+
+<figure>
+<img src="killerfig-cep-g1.jpg" width="700px" />
+  <figcaption>Illustration of the `Two Truth` graph.</figcaption>
+</figure>
+
+
+# Codes and Demos
+
+To run the experiemnts in the paper, please follow these steps.  
+(NB: All the codes are in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
+
+## `R` Package
+
+The latest `R` source package can be installed via `github` as
+
+```{r echo=TRUE}
+require(devtools)
+devtools::install_github("youngser/TwoTruth")
+```
+
+## Demos
+
+To reproduce most of the Figures and Tables in the manuscript, please follow these steps:
+
+```{r demo, eval=FALSE}
+library(TwoTruth)
+
+demo(Fig5)
+demo(Fig6) # Warning: This takes several minutes to run on my laptop!
+demo(Fig7) # Warning: This takes about half an hour to run on my laptop!
+demo(FigSI1) # Warning: This takes a few minutes to run on my laptop!
+demo(FigSI2) # Warning: This takes a few minutes to run on my laptop!
+```
+
+The outputs of the demos are here:
+
+* [Fig5](http://www.cis.jhu.edu/~parky/TwoTruth/demo/Fig5.html)
+* [Fig6](http://www.cis.jhu.edu/~parky/TwoTruth/demo/Fig6.html)
+* [Fig7](http://www.cis.jhu.edu/~parky/TwoTruth/demo/Fig7.html)
+* [FigSI1](http://www.cis.jhu.edu/~parky/TwoTruth/demo/FigSI1.html)
+* [FigSI2](http://www.cis.jhu.edu/~parky/TwoTruth/demo/FigSI2.html)
+
+# Software and Hardware Information
+
+```{r vn,echo=TRUE, eval=TRUE}
+library(help='TwoTruth')
+sessionInfo()
+```
+
+-----
+*prepared by <youngser@jhu.edu> on `r date()`*
