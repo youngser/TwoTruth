@@ -8,10 +8,8 @@ Imports:
     lattice,
     mclust,
     irlba,
-    reshape2,
     colorRamps,
     tidyverse,
-    latex2exp,
     ggExtra
 Author: Youngser Park
 Maintainer: Youngser Park <youngser@jhu.edu>

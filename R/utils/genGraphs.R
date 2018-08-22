@@ -8,7 +8,7 @@ gg_color_hue <- function(n) {
     hcl(h = hues, l = 65, c = 100)[1:n]
 }
 
-getLabels <- function()
+getLabels <- function(dname, gname)
 {
     anat_file <- paste0(dname,"/vertex-contract-master/data/DS-anat/",gname,"_desikan.csv")
     anat <- read_csv(anat_file, col_types=cols()); #dim(anat) # 1st col is row index
@@ -23,6 +23,7 @@ getLabels <- function()
 
     Y4 <- paste0(stri_sub(capitalize(Yh),1,1),
                  stri_sub(capitalize(Yt),1,1))
+    return(data.frame(Yh=Yh, Yt=Yt, Y4=Y4))
 }
 
 getGraphs3 <- function(dname, gname, s=1, i=1)
@@ -111,7 +112,7 @@ getGraph <- function(type="raw")
             g <- getGraphs3(dname, gname, s, i)
             if (type=="lcc") {
                 g <- getLCC(g, "none")
-            } else {
+            } else { # "raw" weight
                 newv <- setdiff(1:n, as.integer(V(g)$name))
                 g <- delete_edge_attr(g,"weight") + vertex(as.character(newv))
                 g <- permute.vertices(g, as.integer(V(g)$name)) # match

@@ -48,7 +48,7 @@ convincingly illustrated here via a diffusion MRI connectome data set:
 </figure>
 
 
-# Codes and Demos
+# Supplemental Information (SI)
 
 To run the experiemnts in the paper, please follow these steps.  
 (NB: All the codes are in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
@@ -61,6 +61,7 @@ The latest `R` source package can be installed via `github` as
 ```r
 require(devtools)
 devtools::install_github("youngser/TwoTruth")
+# WARNING: may take a while to install all the required packages
 ```
 
 ## Demos
@@ -110,4 +111,4 @@ sessionInfo()
 ```
 
 -----
-*prepared by <youngser@jhu.edu> on Wed Aug 22 09:24:53 2018*
+*prepared by <youngser@jhu.edu> on Wed Aug 22 12:19:58 2018*

@@ -1,5 +1,25 @@
+getB2 <- function (A, Y)
+{
+    n <- nrow(A)
+    K <- length(unique(Y))
+    B <- matrix(0, K, K)
+    for (i in 1:K) {
+        for (j in i:K) {
+            if (i != j) {
+                B[j, i] <- B[i, j] <- mean(A[which(Y == i), which(Y == j)])
+            }
+            else {
+                n.i <- length(which(Y == i))
+                B[i, i] <- sum(A[which(Y == i), which(Y == i)])/(n.i^2 - n.i)
+            }
+        }
+    }
+    return(B)
+}
+
 getB <- function(g, verbose=FALSE)
 {
+    require(Matrix)
     df <- as.tibble(data.frame(v=as.numeric(V(g)$name),
                                hemisphere=V(g)$hemisphere,
                                tissue=V(g)$tissue,
@@ -51,4 +71,22 @@ getB <- function(g, verbose=FALSE)
     return(list(B.h=B1,B.t=B2))
     #	round(B,4); #image(Matrix(B))
     #	det(B)
+}
+
+
+getBht <- function(g, Y)
+{
+    Bout <- getB(g)
+    Bh <- Bout$B.h
+    Bt <- Bout$B.t
+    #				Bh <- Bh[c(1,3),c(1,3)] # c(1,3) for awesomer !!??
+    #				Bt <- Bt[c(2,4),c(2,4)] # c(2,4) for awesomer !!??
+    Bh <- Bh[c(1,2),c(1,2)]
+    Bt <- Bt[c(1,2),c(1,2)]
+
+    x.h <- min(Bh[1,1],Bh[2,2]) / max(Bh[1,1],Bh[2,2])
+    y.h	<- Bh[1,2] / max(Bh[1,1],Bh[2,2])
+    x.t <- min(Bt[1,1],Bt[2,2]) / max(Bt[1,1],Bt[2,2])
+    y.t	<- Bt[1,2] / max(Bt[1,1],Bt[2,2])
+    return(c(paste0(x.h, ":", y.h, ",", x.t,":", y.t)))
 }

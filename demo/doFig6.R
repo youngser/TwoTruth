@@ -1,6 +1,6 @@
 suppressMessages(library(tidyverse))
-suppressMessages(library(colorRamps))
-suppressMessages(library(latex2exp))
+suppressMessages(library(colorRamps)) # for matlab.like
+#suppressMessages(library(latex2exp))
 
 
 data(dd3)
@@ -15,7 +15,9 @@ dk$dhat <- as.numeric(as.character(dk$dhat))
 dk$Khat <- as.numeric(as.character(dk$Khat))
 dk <- dk %>% filter(inout != "yet")
 
-dk2 <- reshape2::melt(dk, id.vars = c(1:7,11))
+#dk2 <- reshape2::melt(dk, id.vars = c(1:7,11)) # require reshape2
+#dk2 <- gather(dk, `LR`, `GW`, `LRGW`, key="variable", value="value")
+dk2 <- gather(dk, `LR`:`LRGW`, key="variable", value="value")
 # ggplot(dk2, aes(x=dhat, y=Khat, col=as.numeric(as.character(value)))) +
 #     #	geom_point(alpha=0.5) +
 #     geom_jitter(width=0.5,height=0.5,alpha=0.5) + facet_grid(emb~variable) +
@@ -46,5 +48,6 @@ pp.ari <- dk3 %>% ggplot(aes(x=dhat, y=Khat, col=value2)) +
                               "0.075",
                               "0.100",
                               "> 0.125")) +
-    labs(x=TeX('$\\hat{d}$'), y=TeX('$\\hat{K}$'), color = "ARI")
+#    labs(x=TeX('$\\hat{d}$'), y=TeX('$\\hat{K}$'), color = "ARI") # require latex2exp package
+    labs(x="dhat", y="Khat", color = "ARI")
 print(pp.ari)

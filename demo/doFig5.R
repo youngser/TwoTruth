@@ -1,9 +1,6 @@
 suppressMessages(library(tidyverse))
 
-#devtools::use_data(Bht, Bout2, internal = TRUE)
-#data(Bout2)
-#data(Bht)
-
+## For Chernoff stuff
 a <- 0.50 #value of "a", 0.1
 my.max.val <- 100 # 1000 #number of initial steps; increase value when decreasing "a"
 my.vals <- t(combn(seq(1:(my.max.val-1)),2))/(my.max.val) #columns for b and c
@@ -25,7 +22,20 @@ data.pts <- apply(my.vals, 1, plotter)
 data <- data.frame(cbind(my.vals/a,data.pts))
 colnames(data) <- c("bDIVa","cDIVa","ratio")
 
-## Bout2 & Bht: internal data
+## Bout2 & Bht: internal data (sysdata)
+## Bout2: B matrices from the all 114 raw graphs, so I omit
+## Bht: calc from url(glist) & data(Y)
+recalc <- FALSE
+if (recalc) {
+    data(Y)
+    print(load(url("http://www.cis.jhu.edu/~parky/TT/Data/TT-glist114-raw.rda"))) # ~2GB
+    df.B <- glist %>% map(getBht, Y=Y) %>% do.call(rbind, .) # take a while, ~5 min
+    Bht <- data.frame(subj=rep(1:(length(df.B)/2), each=2), scan=rep(c(1,2),times=length(df.B)/2), Bxy=df.B)
+    Bht <- separate_rows(Bht, Bxy, sep=",")
+    Bht <- separate(Bht, Bxy, sep=":", into=c("x","y"), convert=TRUE)
+    Bht <- data.frame(Bht, label=rep(c("Bh","Bt"), times=nrow(Bht)/2))
+}
+
 bh.x <- min(Bout2$B.h[1,1],Bout2$B.h[2,2]) / max(Bout2$B.h[1,1],Bout2$B.h[2,2])
 bt.x <- min(Bout2$B.t[1,1],Bout2$B.t[2,2]) / max(Bout2$B.t[1,1],Bout2$B.t[2,2])
 bh.y <- Bout2$B.h[1,2] / max(Bout2$B.h[1,1],Bout2$B.h[2,2])
