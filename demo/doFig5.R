@@ -1,3 +1,6 @@
+suppressMessages(library(tidyverse))
+
+
 a <- 0.50 #value of "a", 0.1
 my.max.val <- 100 # 1000 #number of initial steps; increase value when decreasing "a"
 my.vals <- t(combn(seq(1:(my.max.val-1)),2))/(my.max.val) #columns for b and c
