@@ -1,8 +1,8 @@
 suppressMessages(library(tidyverse))
 
 #devtools::use_data(Bht, Bout2, internal = TRUE)
-data(Bout2)
-data(Bht)
+#data(Bout2)
+#data(Bht)
 
 a <- 0.50 #value of "a", 0.1
 my.max.val <- 100 # 1000 #number of initial steps; increase value when decreasing "a"
@@ -25,7 +25,7 @@ data.pts <- apply(my.vals, 1, plotter)
 data <- data.frame(cbind(my.vals/a,data.pts))
 colnames(data) <- c("bDIVa","cDIVa","ratio")
 
-## Bout2: internal data
+## Bout2 & Bht: internal data
 bh.x <- min(Bout2$B.h[1,1],Bout2$B.h[2,2]) / max(Bout2$B.h[1,1],Bout2$B.h[2,2])
 bt.x <- min(Bout2$B.t[1,1],Bout2$B.t[2,2]) / max(Bout2$B.t[1,1],Bout2$B.t[2,2])
 bh.y <- Bout2$B.h[1,2] / max(Bout2$B.h[1,1],Bout2$B.h[2,2])
@@ -52,6 +52,8 @@ pp6 <- pp5 + geom_tile(data=data, aes(x=cDIVa, y=bDIVa, fill=ratio), alpha=0.5, 
     guides(colour = guide_legend(override.aes = list(size=2,shape=19))) +
 ##	geom_point(data=TT, aes(x=x,y=y), size=20, shape="*", stroke=2) +
 	geom_point(data=TT, aes(x=x,y=y), size=17, shape="*", color=c("purple","cyan"))
+
+## This is prettier, but works only on Mac apprently !?
 #pp6 <- pp6 + geom_text(data=TT, aes(x=x,y=y), label="★", size=10, family = "HiraKakuPro-W3") +
 #    geom_text(data=TT, aes(x=x,y=y), label="★", size=5, family = "HiraKakuPro-W3", color=c("red","blue"))
 print(pp6)
