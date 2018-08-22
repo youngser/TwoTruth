@@ -49,9 +49,9 @@ pp6 <- pp5 + geom_tile(data=data, aes(x=cDIVa, y=bDIVa, fill=ratio), alpha=0.5, 
     #	labs(x="min(a,c) / max(a,c)", y="b / max(a,c)") +
     theme(legend.title=element_blank(), legend.position=c(0.1,0.92)) +
     geom_point(data=Bht, aes(x=x, y=y, color=label)) +
-    guides(colour = guide_legend(override.aes = list(size=2,shape=19))) #+
+    guides(colour = guide_legend(override.aes = list(size=2,shape=19))) +
 ##	geom_point(data=TT, aes(x=x,y=y), size=20, shape="*", stroke=2) +
-#	geom_point(data=TT, aes(x=x,y=y), size=17, shape="*", color=c("purple","cyan"))
-pp6 <- pp6 + geom_text(data=TT, aes(x=x,y=y), label="★", size=10, family = "HiraKakuPro-W3") +
-    geom_text(data=TT, aes(x=x,y=y), label="★", size=5, family = "HiraKakuPro-W3", color=c("red","blue"))
+	geom_point(data=TT, aes(x=x,y=y), size=17, shape="*", color=c("purple","cyan"))
+#pp6 <- pp6 + geom_text(data=TT, aes(x=x,y=y), label="★", size=10, family = "HiraKakuPro-W3") +
+#    geom_text(data=TT, aes(x=x,y=y), label="★", size=5, family = "HiraKakuPro-W3", color=c("red","blue"))
 print(pp6)
