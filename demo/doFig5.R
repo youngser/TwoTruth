@@ -1,5 +1,6 @@
 suppressMessages(library(tidyverse))
 
+devtools::use_data(Bht, Bout2, internal = TRUE)
 
 a <- 0.50 #value of "a", 0.1
 my.max.val <- 100 # 1000 #number of initial steps; increase value when decreasing "a"
