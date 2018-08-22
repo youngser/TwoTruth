@@ -88,9 +88,9 @@ To reproduce most of the Figures and Tables in the manuscript, please follow the
 ```{r demo, eval=FALSE}
 library(TwoTruth)
 
-demo(Fig5)
-demo(Fig6) 
-demo(Fig7) 
+demo(doFig5)
+demo(doFig6) 
+demo(doFig7) 
 ```
 
 # Software and Hardware Information

@@ -71,9 +71,9 @@ To reproduce most of the Figures and Tables in the manuscript, please follow the
 ```r
 library(TwoTruth)
 
-demo(Fig5)
-demo(Fig6) 
-demo(Fig7) 
+demo(doFig5)
+demo(doFig6) 
+demo(doFig7) 
 ```
 
 # Software and Hardware Information
@@ -110,4 +110,4 @@ sessionInfo()
 ```
 
 -----
-*prepared by <youngser@jhu.edu> on Wed Aug 22 09:08:21 2018*
+*prepared by <youngser@jhu.edu> on Wed Aug 22 09:24:53 2018*
