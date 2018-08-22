@@ -91,8 +91,6 @@ library(TwoTruth)
 demo(Fig5)
 demo(Fig6) 
 demo(Fig7) 
-demo(FigSI1) 
-demo(FigSI2) 
 ```
 
 # Software and Hardware Information

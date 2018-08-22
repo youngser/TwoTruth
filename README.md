@@ -74,8 +74,6 @@ library(TwoTruth)
 demo(Fig5)
 demo(Fig6) 
 demo(Fig7) 
-demo(FigSI1) 
-demo(FigSI2) 
 ```
 
 # Software and Hardware Information
@@ -112,4 +110,4 @@ sessionInfo()
 ```
 
 -----
-*prepared by <youngser@jhu.edu> on Wed Aug 22 09:02:09 2018*
+*prepared by <youngser@jhu.edu> on Wed Aug 22 09:08:21 2018*
