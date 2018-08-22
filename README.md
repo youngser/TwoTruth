@@ -71,7 +71,6 @@ To reproduce most of the Figures and Tables in the manuscript, please follow the
 ```r
 library(TwoTruth)
 
-demo(Figs3and4)
 demo(Fig5)
 demo(Fig6) # Warning: This takes several minutes to run on my laptop!
 demo(Fig7) # Warning: This takes about half an hour to run on my laptop!
@@ -81,7 +80,6 @@ demo(FigSI2) # Warning: This takes a few minutes to run on my laptop!
 
 The outputs of the demos are here:
 
-* [Figs3and4](http://www.cis.jhu.edu/~parky/TwoTruth/demo/Figs3and4.html)
 * [Fig5](http://www.cis.jhu.edu/~parky/TwoTruth/demo/Fig5.html)
 * [Fig6](http://www.cis.jhu.edu/~parky/TwoTruth/demo/Fig6.html)
 * [Fig7](http://www.cis.jhu.edu/~parky/TwoTruth/demo/Fig7.html)
@@ -122,4 +120,4 @@ sessionInfo()
 ```
 
 -----
-*prepared by <youngser@jhu.edu> on Tue Aug 21 12:11:48 2018*
+*prepared by <youngser@jhu.edu> on Wed Aug 22 09:00:26 2018*
