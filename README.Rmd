@@ -150,7 +150,8 @@ To run the experiemnts in the paper, please follow these steps.
 ```{r echo=TRUE}
 require(devtools)
 devtools::install_github("youngser/TwoTruth")
-# WARNING: may take a while to install all the required packages
+# WARNING: THis may take a while to install all the required packages!
+# Also, depending on the enviroment, many packages need to be reinstalled/updated manually!
 ```
 
 ## Demos
@@ -163,6 +164,8 @@ library(TwoTruth)
 demo(doFig5)
 demo(doFig6) 
 demo(doFig7) 
+demo(doSIFig1)
+demo(doSIFig2)
 ```
 
 # Software and Hardware Information

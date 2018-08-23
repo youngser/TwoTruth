@@ -2179,7 +2179,8 @@ To run the experiemnts in the paper, please follow these steps.
 ```r
 require(devtools)
 devtools::install_github("youngser/TwoTruth")
-# WARNING: may take a while to install all the required packages
+# WARNING: THis may take a while to install all the required packages!
+# Also, depending on the enviroment, many packages need to be reinstalled/updated manually!
 ```
 
 ## Demos
@@ -2193,6 +2194,8 @@ library(TwoTruth)
 demo(doFig5)
 demo(doFig6) 
 demo(doFig7) 
+demo(doSIFig1)
+demo(doSIFig2)
 ```
 
 # Software and Hardware Information
@@ -2235,7 +2238,7 @@ sessionInfo()
 ## [19] plyr_1.8.4        munsell_0.5.0     gtable_0.2.0     
 ## [22] cellranger_1.1.0  rvest_0.3.2       psych_1.7.5      
 ## [25] evaluate_0.10.1   labeling_0.3      parallel_3.4.2   
-## [28] highr_0.7         broom_0.4.2       Rcpp_0.12.18     
+## [28] highr_0.7         broom_0.4.5       Rcpp_0.12.18     
 ## [31] scales_1.0.0.9000 backports_1.1.2   jsonlite_1.5     
 ## [34] mnormt_1.5-5      hms_0.3           digest_0.6.15    
 ## [37] stringi_1.2.3     bookdown_0.5      grid_3.4.2       
@@ -2248,4 +2251,4 @@ sessionInfo()
 ```
 
 -----
-*prepared by <youngser@jhu.edu> on Thu Aug 23 07:30:01 2018*
+*prepared by <youngser@jhu.edu> on Thu Aug 23 12:16:01 2018*
