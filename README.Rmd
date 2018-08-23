@@ -1,20 +1,28 @@
 ---
-title: On a `Two Truths` Phenomenon in Spectral Graph Clustering
+title: "On a `Two Truths` Phenomenon in Spectral Graph Clustering"
 output: 
-    html_document:
-      css: ~/RFolder/pandoc.css
-      fig_height: 6
-      fig_width: 6
-      highlight: pygments
-      keep_md: yes
-      theme: cerulean
-      number_sections: yes
-#      toc: yes
-#        toc_depth: 3
-#        toc_float: no
+  bookdown::html_document2:
+    code_folding: show
+    keep_md: true
+#    css: ~/RFolder/pandoc.css
+    fig_caption: yes
+    fig_height: 4.5
+    fig_width: 4.5
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE, results='asis'}
+suppressMessages(library(kableExtra))
+#suppressMessages(library(captioner))
+#tab_nums <- captioner(prefix="Table")
+#fig_nums <- captioner()
+
+suppressMessages(library(tidyverse))
+
 library(knitr)
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE,warning=FALSE)
 
@@ -23,15 +31,6 @@ opts_knit$set(eval.after = c('fig.cap','fig.scap'))
 knit_hooks$set(document = function(x) {                                                                                        
           gsub('(\\\\end\\{knitrout\\}[\n]+)', '\\1\\\\noindent ', x)                                                                  
           })
-
- fn = local({
-   i = 0
-   function(x) {
-     i <<- i + 1
-#     paste('Figure ', i, ': ', x, sep = '')
-     paste('', '', x, sep = '')
-   }
- })
 
 ```
 
@@ -63,18 +62,90 @@ convincingly illustrated here via a diffusion MRI connectome data set:
 
 <figure>
 <img src="vignettes/killerfig-cep-g1.jpg" width="700px" />
-  <figcaption>Illustration of the `Two Truth` graph.</figcaption>
+  <figcaption>Figure 1. Illustration of the Two Truths phenomenon.</figcaption>
 </figure>
 
 
 # Supplemental Information (SI)
 
-To run the experiemnts in the paper, please follow these steps.  
-(NB: All the codes are in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
+## Data
+
+Here we make available the connectome data used for our illustration:
+$m = 114$ graphs on $n \approx 40,000$ vertices, 
+and for each graph every vertex has a {Left,Right} label and a {Gray,White} label.
+
+NB:
+The original diffusion MRI connectomes are symmetric, hollow, and weighted.
+This is not meant to be a finding of neurscientific significance;
+rather, this is an illustration of the 'Two Truths' phenomenon.
+As such, we consider the largest connected component of binarized versions of the connectomes.
+
+The $m=114$ binary symmetric hollow graphs with $n_i \approx 40K$ vertices and vertex label attributes can be downloaded as an `R` object as following:
+
+```{r, echo=TRUE, eval=FALSE}
+print(load(url("http://www.cis.jhu.edu/~parky/TT/Data/TT-glist114-binary.rda"))) 
+# ~4GB, may take several minutes to load
+#[1] "glist"
+length(glist)
+#[1] 114
+
+library(igraph)
+summary(glist[[1]])
+#IGRAPH b40d5fe UNW- 40813 2224492 -- sub-0025864_ses-1_dwi_DS72784
+#+ attr: name (g/c), name (v/c), hemisphere (v/c), tissue (v/c), Y
+#| (v/c), weight (e/n)
+
+table(V(glist[[1]])$hemisphere)
+# left right 
+#20412 20401 
+
+table(V(glist[[1]])$tissue)
+# gray white 
+#19353 21460 
+
+table(V(glist[[1]])$Y)
+#   LG    LW    RG    RW 
+# 9664 10748  9689 10712 
+```
+
+```{r, echo=FALSE, eval=TRUE, fig.show='hold', fig.width=4.5, fig.height=4.5, fig.cap="Summary of post-LCC of `DS72784` `binary`"}
+library(TwoTruth)
+data(twotruth)
+
+twotruth %>% dplyr::select(c(2:8)) %>%
+kable("html", escape=F, digits=2, align = "c", caption="Summary of post-LCC's of `DS72784`") %>%
+	  kable_styling("striped", full_width = F) %>%
+	  column_spec(1, bold = T) %>%
+	  collapse_rows(columns = c(1:7)) %>%  #add_header_above(c(" " = 3, "scan 1" = 5, "scan 2" = 5)) %>%
+	  scroll_box(width = "600px", height = "500px")
+
+new.dd <- twotruth %>% dplyr::select(c(2:8)) %>% dplyr::select(-3) %>% gather(`n.LG`:`n.RW`, key="class", value="count") %>% unique()
+new.dd$graph <- factor(new.dd$graph, levels=paste(sort(as.integer(levels(new.dd$graph)))))
+new.dd$count <- as.integer(new.dd$count)
+new.dd <- new.dd %>% mutate(ind=factor(paste(graph,scan)))
+levels(new.dd$ind) <- as.character(1:length(levels(new.dd$ind)))
+p1 <- ggplot(new.dd, aes(x=ind, y=count, fill=class)) +
+	geom_bar(stat="identity") + #facet_grid(~scan) + 
+	theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "bottom") +
+	theme(legend.title=element_blank()) +
+	scale_x_discrete(breaks=as.character(seq(5,max(as.numeric(new.dd$ind)),by=5)))
+print(p1)
+p2 <- new.dd %>% filter(count>3000) %>%
+	ggplot(aes(x=class, y=count, fill=class)) + 
+    geom_point(aes(col=class), alpha=0.5, position = position_jitterdodge(jitter.width=0.3)) +
+	geom_boxplot(alpha=0.7, notch=TRUE, outlier.size = 0) +
+	theme(legend.title=element_blank(), legend.position = "bottom")
+print(p2)
+```
+
+Note that there is one bad graph in the data set: subject 50 scan 2.  We have left this as is.
+
 
 ## `R` Package
 
-The latest `R` source package can be installed via `github` as
+To run the experiemnts in the paper, please follow these steps.  
+(NB: All the codes are in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
+
 
 ```{r echo=TRUE}
 require(devtools)

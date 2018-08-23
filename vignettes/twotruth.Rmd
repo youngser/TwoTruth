@@ -57,18 +57,29 @@ convincingly illustrated here via a diffusion MRI connectome data set:
 
 <figure>
 <img src="killerfig-cep-g1.jpg" width="700px" />
-  <figcaption>Illustration of the `Two Truth` graph.</figcaption>
+  <figcaption>Fig. 1. Illustration of the Two Truths phenomenon.</figcaption>
 </figure>
 
 
 # Supplemental Information (SI)
 
-To run the experiemnts in the paper, please follow these steps.  
-(NB: All the codes are in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
+## Data
+
+Here we make available the connectome data used for our illustration:
+$m = 114$ graphs on $n \approx 40,000$ vertices, 
+and for each graph every vertex has a {Left,Right} label and a {Gray,White} label.
+
+NB:
+The original diffusion MRI connectomes are symmetric, hollow, and weighted.
+This is not meant to be a finding of neurscientific significance;
+rather, this is an illustration of the 'Two Truths' phenomenon.
+As such, we consider the largest connected component of binarized versions of the connectomes.
+
 
 ## `R` Package
 
-The latest `R` source package can be installed via `github` as
+To run the experiemnts in the paper, please follow these steps.  
+(NB: All the codes are in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
 
 ```{r echo=TRUE}
 require(devtools)
