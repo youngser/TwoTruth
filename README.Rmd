@@ -2,6 +2,7 @@
 title: "On a `Two Truths` Phenomenon in Spectral Graph Clustering"
 output: 
   bookdown::html_document2:
+#  html_document:
     code_folding: show
     keep_md: true
 #    css: ~/RFolder/pandoc.css
@@ -24,29 +25,17 @@ suppressMessages(library(kableExtra))
 suppressMessages(library(tidyverse))
 
 library(knitr)
-knitr::opts_chunk$set(echo=TRUE, eval=FALSE,warning=FALSE)
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE,warning=FALSE, message=FALSE)
 
-opts_knit$set(aliases=c(h='fig.height', w='fig.width', cap='fig.cap', scap='fig.scap'))                                                                               
-opts_knit$set(eval.after = c('fig.cap','fig.scap'))                                                                            
-knit_hooks$set(document = function(x) {                                                                                        
-          gsub('(\\\\end\\{knitrout\\}[\n]+)', '\\1\\\\noindent ', x)                                                                  
-          })
+#opts_knit$set(aliases=c(h='fig.height', w='fig.width', cap='fig.cap', scap='fig.scap'))                                                                               
+#opts_knit$set(eval.after = c('fig.cap','fig.scap'))                                                                            
+#knit_hooks$set(document = function(x) {                                                      #          gsub('(\\\\end\\{knitrout\\}[\n]+)', '\\1\\\\noindent ', x)                        #          })
 
 ```
 
-**[Department of Applied Mathematics and Statistics](http://engineering.jhu.edu/ams/)**      
-**[Center for Imaging Science](http://www.cis.jhu.edu)**  
-**[Department of Biomedical Engineering](http://engineering.jhu.edu/bme/)**      
-**[Human Language Technology Center of Excellence](http://hltcoe.jhu.edu)**  
-**[Johns Hopkins University](http://www.jhu.edu)**  
-and  
-**[University of Massachusetts, Amherst, MA](http://umass.edu)**  
-and  
-**[Institute for Defense Analyses, Center for Computing Science]()**  
-
 -----
 
-> Carey E. Priebe, Youngser Park, Joshua T. Vogelstein, John M. Conroy, Vince Lyzinskic, Minh Tang, Avanti Athreya, Joshua Cape, and Eric Bridgeford, "[On a 'Two Truths' Phenomenon in Spectral Graph Clustering](http://arxiv.org/abs/xxxx)," _Proceedings of National Academy of Science_, submitted, 2018.
+> Carey E. Priebe, Youngser Park, Joshua T. Vogelstein, John M. Conroy, Vince Lyzinskic, Minh Tang, Avanti Athreya, Joshua Cape, and Eric Bridgeford, "[On a 'Two Truths' Phenomenon in Spectral Graph Clustering](http://arxiv.org/abs/1808.07801)," _Proceedings of National Academy of Science_, submitted, 2018.
 
 
 # Abstract
@@ -71,20 +60,22 @@ convincingly illustrated here via a diffusion MRI connectome data set:
 ## Data
 
 Here we make available the connectome data used for our illustration:
-$m = 114$ graphs on $n \approx 40,000$ vertices, 
-and for each graph every vertex has a {Left,Right} label and a {Gray,White} label.
+114 graphs, and for each graph every vertex has a {Left,Right} label and a {Gray,White} label.
 
 NB:
-The original diffusion MRI connectomes are symmetric, hollow, and weighted.
-This is not meant to be a finding of neurscientific significance;
-rather, this is an illustration of the 'Two Truths' phenomenon.
+This is not meant to be a finding of neurscientific significance; 
+rather, this is an illustration of our ‘Two Truths’ phenomenon. 
 As such, we consider the largest connected component of binarized versions of the connectomes.
+(The original diffusion MRI connectomes are symmetric, hollow, and weighted.)
 
-The $m=114$ binary symmetric hollow graphs with $n_i \approx 40K$ vertices and vertex label attributes can be downloaded as an `R` object as following:
+The $m=114$ binary symmetric hollow graphs on $n \approx 40,000$ vertices
+and associated vertex label attributes
+can be downloaded as an R object:
 
 ```{r, echo=TRUE, eval=FALSE}
 print(load(url("http://www.cis.jhu.edu/~parky/TT/Data/TT-glist114-binary.rda"))) 
-# ~4GB, may take several minutes to load
+# ~8GB, may take several minutes to load.
+# This may fail with "Error: vector memory exhaused (limit reached?)" if there is not enough memory on your computer!
 #[1] "glist"
 length(glist)
 #[1] 114
@@ -108,12 +99,12 @@ table(V(glist[[1]])$Y)
 # 9664 10748  9689 10712 
 ```
 
-```{r, echo=FALSE, eval=TRUE, fig.show='hold', fig.width=4.5, fig.height=4.5, fig.cap="Summary of post-LCC of `DS72784` `binary`"}
+```{r, echo=FALSE, eval=TRUE, fig.show='hold', fig.width=4.5, fig.height=4.5, fig.cap="Summary of data: number of vertices per graph by hemisphere/tissue type."}
 library(TwoTruth)
 data(twotruth)
 
 twotruth %>% dplyr::select(c(2:8)) %>%
-kable("html", escape=F, digits=2, align = "c", caption="Summary of post-LCC's of `DS72784`") %>%
+kable("html", escape=F, digits=2, align = "c", caption="Summary of data: number of vertices per graph by hemisphere/tissue type.") %>%
 	  kable_styling("striped", full_width = F) %>%
 	  column_spec(1, bold = T) %>%
 	  collapse_rows(columns = c(1:7)) %>%  #add_header_above(c(" " = 3, "scan 1" = 5, "scan 2" = 5)) %>%
@@ -122,13 +113,13 @@ kable("html", escape=F, digits=2, align = "c", caption="Summary of post-LCC's of
 new.dd <- twotruth %>% dplyr::select(c(2:8)) %>% dplyr::select(-3) %>% gather(`n.LG`:`n.RW`, key="class", value="count") %>% unique()
 new.dd$graph <- factor(new.dd$graph, levels=paste(sort(as.integer(levels(new.dd$graph)))))
 new.dd$count <- as.integer(new.dd$count)
-new.dd <- new.dd %>% mutate(ind=factor(paste(graph,scan)))
-levels(new.dd$ind) <- as.character(1:length(levels(new.dd$ind)))
-p1 <- ggplot(new.dd, aes(x=ind, y=count, fill=class)) +
+new.dd <- new.dd %>% mutate(index=factor(paste(graph,scan)))
+levels(new.dd$index) <- as.character(1:length(levels(new.dd$index)))
+p1 <- ggplot(new.dd, aes(x=index, y=count, fill=class)) +
 	geom_bar(stat="identity") + #facet_grid(~scan) + 
 	theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "bottom") +
 	theme(legend.title=element_blank()) +
-	scale_x_discrete(breaks=as.character(seq(5,max(as.numeric(new.dd$ind)),by=5)))
+	scale_x_discrete(breaks=as.character(seq(5,max(as.numeric(new.dd$index)),by=5)))
 print(p1)
 p2 <- new.dd %>% filter(count>3000) %>%
 	ggplot(aes(x=class, y=count, fill=class)) + 
@@ -138,35 +129,53 @@ p2 <- new.dd %>% filter(count>3000) %>%
 print(p2)
 ```
 
-Note that there is one bad graph in the data set: subject 50 scan 2.  We have left this as is.
+Note that there is one bad graph in the data set: 
+image processing failed for left hemisphere of subject 50 scan 2. 
+(This anomaly is shown in the bar plot, not shown in the box plot.)
+We have left this graph in, as is.
 
 
-## `R` Package
+## Code
 
-To run the experiemnts in the paper, please follow these steps.  
-(NB: All the codes are in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
-
+`R` code for the reproducing the experiemntal results presented in the manuscript is available in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
 
 ```{r echo=TRUE}
 require(devtools)
 devtools::install_github("youngser/TwoTruth")
-# WARNING: THis may take a while to install all the required packages!
+# WARNING: This may take a while to install all the required packages!
 # Also, depending on the enviroment, many packages need to be reinstalled/updated manually!
 ```
 
-## Demos
-
-To reproduce most of the Figures in the manuscript, please follow these steps:
+## Figures
 
 ```{r demo, eval=FALSE}
 library(TwoTruth)
-
-demo(doFig5)
-demo(doFig6) 
-demo(doFig7) 
-demo(doFigS1)
-demo(doFigS2)
 ```
+
+Figures from manuscript:
+
+```{r fig6, echo=FALSE, eval=TRUE, fig.cap="Results of the ($\\widehat{d},\\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\\widehat{d} \\in \\{30,\\dots,60\\}$ and $\\widehat{K} \\in \\{2,\\dots,20\\}$; for ASE we see $\\widehat{d} \\in \\{2,\\dots,20\\}$ and $\\widehat{K} \\in \\{10,\\dots,50\\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \\{Left,Right\\} and \\{Gray,White\\}, and shows that LSE clustering identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Our \'Two Truths\' phenomenon is conclusively demonstrated: LSE finds $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE finds $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
+source("demo/doFig6.R")
+```
+```{r fig7, echo=FALSE, eval=TRUE, fig.cap="Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\\{\\mbox{Left},\\mbox{Right}\\}$ truth against the difference in ARI for the $\\{\\mbox{Gray},\\mbox{White}\\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identified $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Marginal histograms are provided. Our `Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
+source("demo/doFig7.R")
+```
+```{r figS1, echo=FALSE, eval=TRUE, fig.cap="$\\widehat{d}$ for our 114 connectomes -- scree plots and ZG1."}
+source("demo/doFigS1.R")
+```
+```{r figS2, echo=FALSE, eval=TRUE, fig.cap="$\\widehat{K}$ for our 114 connectomes -- BIC curves."}
+source("demo/doFigS2.R")
+```
+
+Generating figures from pre-calculated spectral clustering results:
+
+* Figure S1 ($\widehat{d}$ via Zhu \& Ghodsi): `demo(doFigS1)`    
+* Figure S2 ($\widehat{K}$ via MClust BIC):  `demo(doFigS2)`   
+* Figure 6 ($\widehat{d}$, $\widehat{K}$, and ARI): `demo(doFig6)`  
+* Figure 7 (ARI comparison): `demo(doFig7)` 
+
+Generating spectral clustering results from the data:
+(this takes tens of hours on my macbook):
 
 # Software and Hardware Information
 
@@ -176,4 +185,8 @@ sessionInfo()
 ```
 
 -----
+Carey E Priebe & Youngser Park  
+Department of Applied Mathematics and Statistics  
+Johns Hopkins University  
+ 
 *prepared by <youngser@jhu.edu> on `r date()`*

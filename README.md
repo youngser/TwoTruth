@@ -2,6 +2,7 @@
 title: "On a `Two Truths` Phenomenon in Spectral Graph Clustering"
 output: 
   bookdown::html_document2:
+#  html_document:
     code_folding: show
     keep_md: true
 #    css: ~/RFolder/pandoc.css
@@ -17,19 +18,9 @@ editor_options:
 
 
 
-**[Department of Applied Mathematics and Statistics](http://engineering.jhu.edu/ams/)**      
-**[Center for Imaging Science](http://www.cis.jhu.edu)**  
-**[Department of Biomedical Engineering](http://engineering.jhu.edu/bme/)**      
-**[Human Language Technology Center of Excellence](http://hltcoe.jhu.edu)**  
-**[Johns Hopkins University](http://www.jhu.edu)**  
-and  
-**[University of Massachusetts, Amherst, MA](http://umass.edu)**  
-and  
-**[Institute for Defense Analyses, Center for Computing Science]()**  
-
 -----
 
-> Carey E. Priebe, Youngser Park, Joshua T. Vogelstein, John M. Conroy, Vince Lyzinskic, Minh Tang, Avanti Athreya, Joshua Cape, and Eric Bridgeford, "[On a 'Two Truths' Phenomenon in Spectral Graph Clustering](http://arxiv.org/abs/xxxx)," _Proceedings of National Academy of Science_, submitted, 2018.
+> Carey E. Priebe, Youngser Park, Joshua T. Vogelstein, John M. Conroy, Vince Lyzinskic, Minh Tang, Avanti Athreya, Joshua Cape, and Eric Bridgeford, "[On a 'Two Truths' Phenomenon in Spectral Graph Clustering](http://arxiv.org/abs/1808.07801)," _Proceedings of National Academy of Science_, submitted, 2018.
 
 
 # Abstract
@@ -54,21 +45,23 @@ convincingly illustrated here via a diffusion MRI connectome data set:
 ## Data
 
 Here we make available the connectome data used for our illustration:
-$m = 114$ graphs on $n \approx 40,000$ vertices, 
-and for each graph every vertex has a {Left,Right} label and a {Gray,White} label.
+114 graphs, and for each graph every vertex has a {Left,Right} label and a {Gray,White} label.
 
 NB:
-The original diffusion MRI connectomes are symmetric, hollow, and weighted.
-This is not meant to be a finding of neurscientific significance;
-rather, this is an illustration of the 'Two Truths' phenomenon.
+This is not meant to be a finding of neurscientific significance; 
+rather, this is an illustration of our ‘Two Truths’ phenomenon. 
 As such, we consider the largest connected component of binarized versions of the connectomes.
+(The original diffusion MRI connectomes are symmetric, hollow, and weighted.)
 
-The $m=114$ binary symmetric hollow graphs with $n_i \approx 40K$ vertices and vertex label attributes can be downloaded as an `R` object as following:
+The $m=114$ binary symmetric hollow graphs on $n \approx 40,000$ vertices
+and associated vertex label attributes
+can be downloaded as an R object:
 
 
 ```r
 print(load(url("http://www.cis.jhu.edu/~parky/TT/Data/TT-glist114-binary.rda"))) 
-# ~4GB, may take several minutes to load
+# ~8GB, may take several minutes to load.
+# This may fail with "Error: vector memory exhaused (limit reached?)" if there is not enough memory on your computer!
 #[1] "glist"
 length(glist)
 #[1] 114
@@ -93,7 +86,7 @@ table(V(glist[[1]])$Y)
 ```
 
 <div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:500px; overflow-x: scroll; width:600px; "><table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>(\#tab:unnamed-chunk-2)Summary of post-LCC's of `DS72784`</caption>
+<caption>(\#tab:unnamed-chunk-2)Summary of data: number of vertices per graph by hemisphere/tissue type.</caption>
  <thead>
   <tr>
    <th style="text-align:center;"> graph </th>
@@ -2162,41 +2155,63 @@ table(V(glist[[1]])$Y)
 </table></div>
 
 <div class="figure">
-<img src="README_files/figure-html/unnamed-chunk-2-1.png" alt="Summary of post-LCC of `DS72784` `binary`"  /><img src="README_files/figure-html/unnamed-chunk-2-2.png" alt="Summary of post-LCC of `DS72784` `binary`"  />
-<p class="caption">(\#fig:unnamed-chunk-2)Summary of post-LCC of `DS72784` `binary`</p>
+<img src="README_files/figure-html/unnamed-chunk-2-1.png" alt="Summary of data: number of vertices per graph by hemisphere/tissue type."  /><img src="README_files/figure-html/unnamed-chunk-2-2.png" alt="Summary of data: number of vertices per graph by hemisphere/tissue type."  />
+<p class="caption">(\#fig:unnamed-chunk-2)Summary of data: number of vertices per graph by hemisphere/tissue type.</p>
 </div>
 
-Note that there is one bad graph in the data set: subject 50 scan 2.  We have left this as is.
+Note that there is one bad graph in the data set: 
+image processing failed for left hemisphere of subject 50 scan 2. 
+(This anomaly is shown in the bar plot, not shown in the box plot.)
+We have left this graph in, as is.
 
 
-## `R` Package
+## Code
 
-To run the experiemnts in the paper, please follow these steps.  
-(NB: All the codes are in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
-
+`R` code for the reproducing the experiemntal results presented in the manuscript is available in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
 
 
 ```r
 require(devtools)
 devtools::install_github("youngser/TwoTruth")
-# WARNING: THis may take a while to install all the required packages!
+# WARNING: This may take a while to install all the required packages!
 # Also, depending on the enviroment, many packages need to be reinstalled/updated manually!
 ```
 
-## Demos
-
-To reproduce most of the Figures in the manuscript, please follow these steps:
+## Figures
 
 
 ```r
 library(TwoTruth)
-
-demo(doFig5)
-demo(doFig6) 
-demo(doFig7) 
-demo(doFigS1)
-demo(doFigS2)
 ```
+
+Figures from manuscript:
+
+<div class="figure">
+<img src="README_files/figure-html/fig6-1.png" alt="Results of the ($\widehat{d},\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\widehat{d} \in \{30,\dots,60\}$ and $\widehat{K} \in \{2,\dots,20\}$; for ASE we see $\widehat{d} \in \{2,\dots,20\}$ and $\widehat{K} \in \{10,\dots,50\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \{Left,Right\} and \{Gray,White\}, and shows that LSE clustering identifies $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identifies $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Our 'Two Truths' phenomenon is conclusively demonstrated: LSE finds $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE finds $\{\mbox{Gray},\mbox{White}\}$ (core-periphery)."  />
+<p class="caption">(\#fig:fig6)Results of the ($\widehat{d},\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\widehat{d} \in \{30,\dots,60\}$ and $\widehat{K} \in \{2,\dots,20\}$; for ASE we see $\widehat{d} \in \{2,\dots,20\}$ and $\widehat{K} \in \{10,\dots,50\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \{Left,Right\} and \{Gray,White\}, and shows that LSE clustering identifies $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identifies $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Our 'Two Truths' phenomenon is conclusively demonstrated: LSE finds $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE finds $\{\mbox{Gray},\mbox{White}\}$ (core-periphery).</p>
+</div>
+<div class="figure">
+<img src="README_files/figure-html/fig7-1.png" alt="Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\{\mbox{Left},\mbox{Right}\}$ truth against the difference in ARI for the $\{\mbox{Gray},\mbox{White}\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identified $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Marginal histograms are provided. Our `Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE identifies $\{\mbox{Gray},\mbox{White}\}$ (core-periphery)."  />
+<p class="caption">(\#fig:fig7)Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\{\mbox{Left},\mbox{Right}\}$ truth against the difference in ARI for the $\{\mbox{Gray},\mbox{White}\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identified $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Marginal histograms are provided. Our `Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE identifies $\{\mbox{Gray},\mbox{White}\}$ (core-periphery).</p>
+</div>
+<div class="figure">
+<img src="README_files/figure-html/figS1-1.png" alt="$\widehat{d}$ for our 114 connectomes -- scree plots and ZG1."  />
+<p class="caption">(\#fig:figS1)$\widehat{d}$ for our 114 connectomes -- scree plots and ZG1.</p>
+</div>
+<div class="figure">
+<img src="README_files/figure-html/figS2-1.png" alt="$\widehat{K}$ for our 114 connectomes -- BIC curves."  />
+<p class="caption">(\#fig:figS2)$\widehat{K}$ for our 114 connectomes -- BIC curves.</p>
+</div>
+
+Generating figures from pre-calculated spectral clustering results:
+
+* Figure S1 ($\widehat{d}$ via Zhu \& Ghodsi): `demo(doFigS1)`    
+* Figure S2 ($\widehat{K}$ via MClust BIC):  `demo(doFigS2)`   
+* Figure 6 ($\widehat{d}$, $\widehat{K}$, and ARI): `demo(doFig6)`  
+* Figure 7 (ARI comparison): `demo(doFig7)` 
+
+Generating spectral clustering results from the data:
+(this takes tens of hours on my macbook):
 
 # Software and Hardware Information
 
@@ -2222,33 +2237,39 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] bindrcpp_0.2.2     TwoTruth_0.1.0     knitr_1.20        
-##  [4] forcats_0.2.0      stringr_1.3.1      dplyr_0.7.6       
-##  [7] purrr_0.2.5        readr_1.1.1        tidyr_0.7.2       
-## [10] tibble_1.4.2       ggplot2_3.0.0.9000 tidyverse_1.2.1   
-## [13] kableExtra_0.7.0  
+##  [1] ggExtra_0.8        colorRamps_2.3     bindrcpp_0.2.2    
+##  [4] TwoTruth_0.1.0     knitr_1.20         forcats_0.2.0     
+##  [7] stringr_1.3.1      dplyr_0.7.6        purrr_0.2.5       
+## [10] readr_1.1.1        tidyr_0.7.2        tibble_1.4.2      
+## [13] ggplot2_3.0.0.9000 tidyverse_1.2.1    kableExtra_0.7.0  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.4  reshape2_1.4.3    haven_1.1.0      
-##  [4] lattice_0.20-35   colorspace_1.3-2  htmltools_0.3.6  
-##  [7] viridisLite_0.3.0 yaml_2.1.19       XML_3.98-1.11    
-## [10] rlang_0.2.2       pillar_1.2.3      withr_2.1.2      
-## [13] foreign_0.8-69    glue_1.2.0        selectr_0.3-1    
-## [16] modelr_0.1.1      readxl_1.0.0      bindr_0.1.1      
-## [19] plyr_1.8.4        munsell_0.5.0     gtable_0.2.0     
-## [22] cellranger_1.1.0  rvest_0.3.2       psych_1.7.5      
-## [25] evaluate_0.10.1   labeling_0.3      parallel_3.4.2   
-## [28] highr_0.7         broom_0.4.5       Rcpp_0.12.18     
-## [31] scales_1.0.0.9000 backports_1.1.2   jsonlite_1.5     
-## [34] mnormt_1.5-5      hms_0.3           digest_0.6.15    
-## [37] stringi_1.2.3     bookdown_0.5      grid_3.4.2       
-## [40] rprojroot_1.3-2   cli_1.0.0         tools_3.4.2      
-## [43] magrittr_1.5      lazyeval_0.2.1    crayon_1.3.4     
-## [46] pkgconfig_2.0.1   xml2_1.2.0        lubridate_1.7.3  
-## [49] assertthat_0.2.0  rmarkdown_1.10    httr_1.3.1       
-## [52] rstudioapi_0.7    R6_2.2.2          nlme_3.1-131     
-## [55] compiler_3.4.2
+##  [1] Rcpp_0.12.18      lubridate_1.7.3   lattice_0.20-35  
+##  [4] assertthat_0.2.0  rprojroot_1.3-2   digest_0.6.15    
+##  [7] psych_1.7.5       mime_0.5          R6_2.2.2         
+## [10] cellranger_1.1.0  plyr_1.8.4        backports_1.1.2  
+## [13] evaluate_0.10.1   httr_1.3.1        highr_0.7        
+## [16] pillar_1.2.3      rlang_0.2.2       lazyeval_0.2.1   
+## [19] readxl_1.0.0      rstudioapi_0.7    miniUI_0.1.1.1   
+## [22] rmarkdown_1.10    labeling_0.3      selectr_0.3-1    
+## [25] foreign_0.8-69    munsell_0.5.0     shiny_1.1.0      
+## [28] broom_0.4.5       compiler_3.4.2    httpuv_1.4.5     
+## [31] modelr_0.1.1      xfun_0.3          pkgconfig_2.0.1  
+## [34] mnormt_1.5-5      htmltools_0.3.6   tidyselect_0.2.4 
+## [37] bookdown_0.7      XML_3.98-1.11     viridisLite_0.3.0
+## [40] later_0.7.3       crayon_1.3.4      withr_2.1.2      
+## [43] grid_3.4.2        xtable_1.8-2      nlme_3.1-131     
+## [46] jsonlite_1.5      gtable_0.2.0      magrittr_1.5     
+## [49] scales_1.0.0.9000 cli_1.0.0         stringi_1.2.3    
+## [52] reshape2_1.4.3    promises_1.0.1    xml2_1.2.0       
+## [55] tools_3.4.2       glue_1.2.0        hms_0.3          
+## [58] parallel_3.4.2    yaml_2.1.19       colorspace_1.3-2 
+## [61] rvest_0.3.2       bindr_0.1.1       haven_1.1.0
 ```
 
 -----
-*prepared by <youngser@jhu.edu> on Thu Aug 23 20:07:43 2018*
+Carey E Priebe & Youngser Park  
+Department of Applied Mathematics and Statistics  
+Johns Hopkins University  
+ 
+*prepared by <youngser@jhu.edu> on Fri Aug 24 16:14:07 2018*
