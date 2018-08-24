@@ -156,7 +156,7 @@ devtools::install_github("youngser/TwoTruth")
 
 ## Demos
 
-To reproduce most of the Figures and Tables in the manuscript, please follow these steps:
+To reproduce most of the Figures in the manuscript, please follow these steps:
 
 ```{r demo, eval=FALSE}
 library(TwoTruth)
@@ -164,8 +164,8 @@ library(TwoTruth)
 demo(doFig5)
 demo(doFig6) 
 demo(doFig7) 
-demo(doSIFig1)
-demo(doSIFig2)
+demo(doFigS1)
+demo(doFigS2)
 ```
 
 # Software and Hardware Information
