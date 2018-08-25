@@ -150,7 +150,7 @@ doKmeans <- function(X, Kmax, g, plot.bic=FALSE, verbose=FALSE, M=3000)
 }
 
 
-runAll2 <- function(g, weight="raw", embed="ASE", abs="abs", dmax=100, elb=NULL, Kmax=50, clustering="mclust") #was 70
+runAll2 <- function(g, weight="binary", embed="ASE", abs="abs", dmax=100, elb=NULL, Kmax=50, clustering="mclust") #was 70
 {
     lcc <- getLCC(g, weight=weight)
     Bout <- getB(lcc)

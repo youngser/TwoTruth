@@ -19,7 +19,7 @@ getB2 <- function (A, Y)
 
 getB <- function(g, verbose=FALSE)
 {
-    require(Matrix)
+    library(Matrix)
     df <- as.tibble(data.frame(v=as.numeric(V(g)$name),
                                hemisphere=V(g)$hemisphere,
                                tissue=V(g)$tissue,
@@ -38,13 +38,13 @@ getB <- function(g, verbose=FALSE)
     x <- Matrix(sapply(1:K, function(x) rep(D[,x],times=rho.h)))
     df.a <- df %>% arrange(hemisphere)
     ga <- permute.vertices(g, match(V(g)$name, df.a$v));
-    system.time(tau.h <- t(x) %*% ga[] %*% x);
+    system.time(tau.h <- Matrix::t(x) %*% ga[] %*% x);
     (tau.h <- tau.h/2)
 
     x <- Matrix(sapply(1:K, function(x) rep(D[,x],times=rho.t)))
     df.a <- df %>% arrange(tissue)
     ga <- permute.vertices(g, match(V(g)$name, df.a$v));
-    system.time(tau.t <- t(x) %*% ga[] %*% x);
+    system.time(tau.t <- Matrix::t(x) %*% ga[] %*% x);
     (tau.t <- tau.t/2)
 
     #	(tau.h <- sapply(h.name, function(x) sapply(h.name, function(y)

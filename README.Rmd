@@ -186,7 +186,7 @@ summary(g)
 #IGRAPH aa0dcd3 UNW- 40813 2224492 -- sub-0025864_ses-1_dwi_DS72784
 #+ attr: name (g/c), name (v/c), hemisphere (v/c), tissue (v/c), Y (v/c), weight (e/n)
 
-out <- runAll2(g, weight="raw", embed="ASE", abs="abs", dmax=100, elb=NULL, Kmax=50, clustering="mclust") # this takes ~30 min in our linux server
+out <- runAll2(g, weight="binary", embed="ASE", abs="abs", dmax=100, elb=NULL, Kmax=50, clustering="mclust") # this takes ~30 min in our linux server
 out$mout$df
 ```
 
