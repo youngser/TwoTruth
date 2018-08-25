@@ -150,12 +150,12 @@ doKmeans <- function(X, Kmax, g, plot.bic=FALSE, verbose=FALSE, M=3000)
 }
 
 
-runAll2 <- function(g, weight="binary", embed="ASE", abs="abs", dmax=100, elb=NULL, Kmax=50, clustering="mclust") #was 70
+sclust <- function(g, weight="binary", embed="ASE", dmax=100, elb=NULL, Kmax=50, clustering="mclust") #was 70
 {
     lcc <- getLCC(g, weight=weight)
     Bout <- getB(lcc)
     #	emb.out <- doEmbed(lcc, dmax, embed, abs="noabs", plot.elbow = FALSE);
-    emb.out <- doEmbed(lcc, dmax, embed, abs=abs, plot.elbow = FALSE);
+    emb.out <- doEmbed(lcc, dmax, embed, abs="abs", plot.elbow = FALSE);
     emb <- emb.out$embed;
     if (is.null(elb)) {
         X <- emb$X[,1:max(2, emb.out$elbow[1])]
