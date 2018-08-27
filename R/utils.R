@@ -1,3 +1,7 @@
+suppressMessages(library(igraph))
+suppressMessages(library(mclust))
+suppressMessages(library(fpc))
+
 ptr <- function(g)
 {
     if (class(g) != "igraph") {
@@ -21,7 +25,6 @@ ptr <- function(g)
 
 giant.component <- function(graph, ...)
 {
-    require(igraph)
     cl <- igraph::clusters(graph, ...)
     #    subgraph(graph, which(cl$membership == which.max(cl$csize)-1)-1)
     induced.subgraph(graph, which(cl$membership == which.max(cl$csize)))
@@ -82,7 +85,6 @@ doEmbed <- function(g, dmax, embed="ASE", abs="abs", alg="ZG", plot.elbow=FALSE)
 
 doMclust <- function(X, Kmax, g, plot.bic=FALSE, verbose=FALSE, M=3000)
 {
-    library(mclust)
     if (ncol(X)>1)
         #		modelNames <- c("VII","VEI","VVI","VEE","VVE","VEV","EEV","VVV")
         #		modelNames <- c("VEV","VVV")
@@ -121,8 +123,6 @@ doMclust <- function(X, Kmax, g, plot.bic=FALSE, verbose=FALSE, M=3000)
 
 doKmeans <- function(X, Kmax, g, plot.bic=FALSE, verbose=FALSE, M=3000)
 {
-    library(fpc)
-
     if (length(Kmax)>1) {
         Kmin <- max(Kmax[1],2); Kmax <- min(Kmax[2],nrow(X)/2)
     } else {

@@ -2216,6 +2216,8 @@ Here is an example to run our spectral clustering on one graph:
 
 ```r
 library(TwoTruth)
+library(igraph)
+
 load(url("http://www.cis.jhu.edu/~parky/TT/Data/g-s1s1.Rbin"))
 summary(g)
 #IGRAPH aa0dcd3 UNW- 40813 2224492 -- sub-0025864_ses-1_dwi_DS72784
@@ -2296,4 +2298,4 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University  
  
-*prepared by <youngser@jhu.edu> on Mon Aug 27 14:46:15 2018*
+*prepared by <youngser@jhu.edu> on Mon Aug 27 15:33:33 2018*
