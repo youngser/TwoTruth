@@ -195,8 +195,6 @@ load(url("http://www.cis.jhu.edu/~parky/TT/Data/out-sclust-lse-s1s1.Rbin"))
 ```{r oneg3, echo=TRUE, eval=TRUE}
 rbind(data.frame(embed="ASE", round(out.ase$mout$df,2)), data.frame(embed="LSE", round(out.lse$mout$df,2)))
 ```
-out$mout$df
-```
 
 # Software and Hardware Information
 

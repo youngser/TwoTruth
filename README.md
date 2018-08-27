@@ -2236,8 +2236,6 @@ rbind(data.frame(embed="ASE", round(out.ase$mout$df,2)), data.frame(embed="LSE",
 ## 1   ASE   15   39 0.01 0.04 0.04
 ## 2   LSE   46   10 0.03 0.01 0.02
 ```
-out$mout$df
-```
 
 # Software and Hardware Information
 
@@ -2298,4 +2296,4 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University  
  
-*prepared by <youngser@jhu.edu> on Mon Aug 27 14:43:59 2018*
+*prepared by <youngser@jhu.edu> on Mon Aug 27 14:46:15 2018*
