@@ -96,6 +96,7 @@ doMclust <- function(X, Kmax, g, plot.bic=FALSE, verbose=FALSE, M=3000)
         Kmin <- 2; Kmax <- Kmax
     }
 
+    set.seed(12345)
     if (nrow(X) > M) {
         mout <- Mclust(X, Kmin:Kmax, verbose=verbose, modelNames=modelNames, initialization=list(subset=sample(1:nrow(X), size=M)),prior=priorControl())
     } else {

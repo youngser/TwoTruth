@@ -2210,8 +2210,34 @@ Generating figures from pre-calculated spectral clustering results:
 * Figure 6 ($\widehat{d}$, $\widehat{K}$, and ARI): `demo(doFig6)`  
 * Figure 7 (ARI comparison): `demo(doFig7)` 
 
-Generating spectral clustering results from the data:
-(this takes tens of hours on my macbook):
+Generating spectral clustering results from the data may take tens of hours.  
+Here is an example to run our spectral clustering on one graph:
+
+
+```r
+library(TwoTruth)
+load(url("http://www.cis.jhu.edu/~parky/TT/Data/g-s1s1.Rbin"))
+summary(g)
+#IGRAPH aa0dcd3 UNW- 40813 2224492 -- sub-0025864_ses-1_dwi_DS72784
+#+ attr: name (g/c), name (v/c), hemisphere (v/c), tissue (v/c), Y (v/c), weight (e/n)
+
+out.ase <- sclust(g, embed="ASE", dmax=100, Kmax=50, clustering="mclust")
+out.lse <- sclust(g, embed="LSE", dmax=100, Kmax=50, clustering="mclust") 
+# Each run takes ~30 min in our linux server
+```
+
+
+```r
+rbind(data.frame(embed="ASE", round(out.ase$mout$df,2)), data.frame(embed="LSE", round(out.lse$mout$df,2)))
+```
+
+```
+##   embed dhat Khat   LR   GW LRGW
+## 1   ASE   15   39 0.01 0.04 0.04
+## 2   LSE   46   10 0.03 0.01 0.02
+```
+out$mout$df
+```
 
 # Software and Hardware Information
 
@@ -2241,7 +2267,7 @@ sessionInfo()
 ##  [4] TwoTruth_0.1.0     knitr_1.20         forcats_0.2.0     
 ##  [7] stringr_1.3.1      dplyr_0.7.6        purrr_0.2.5       
 ## [10] readr_1.1.1        tidyr_0.7.2        tibble_1.4.2      
-## [13] ggplot2_3.0.0.9000 tidyverse_1.2.1    kableExtra_0.7.0  
+## [13] ggplot2_3.0.0.9000 tidyverse_1.2.1    kableExtra_0.9.0  
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_0.12.18      lubridate_1.7.3   lattice_0.20-35  
@@ -2253,7 +2279,7 @@ sessionInfo()
 ## [19] readxl_1.0.0      rstudioapi_0.7    miniUI_0.1.1.1   
 ## [22] rmarkdown_1.10    labeling_0.3      selectr_0.3-1    
 ## [25] foreign_0.8-69    munsell_0.5.0     shiny_1.1.0      
-## [28] broom_0.4.5       compiler_3.4.2    httpuv_1.4.5     
+## [28] broom_0.4.5       httpuv_1.4.5      compiler_3.4.2   
 ## [31] modelr_0.1.1      xfun_0.3          pkgconfig_2.0.1  
 ## [34] mnormt_1.5-5      htmltools_0.3.6   tidyselect_0.2.4 
 ## [37] bookdown_0.7      XML_3.98-1.11     viridisLite_0.3.0
@@ -2272,4 +2298,4 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University  
  
-*prepared by <youngser@jhu.edu> on Fri Aug 24 16:14:07 2018*
+*prepared by <youngser@jhu.edu> on Mon Aug 27 14:43:59 2018*

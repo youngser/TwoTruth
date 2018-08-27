@@ -174,9 +174,7 @@ Generating figures from pre-calculated spectral clustering results:
 * Figure 6 ($\widehat{d}$, $\widehat{K}$, and ARI): `demo(doFig6)`  
 * Figure 7 (ARI comparison): `demo(doFig7)` 
 
-Generating spectral clustering results from the data:
-(this takes tens of hours on my macbook):
-
+Generating spectral clustering results from the data may take tens of hours.  
 Here is an example to run our spectral clustering on one graph:
 
 ```{r oneg, echo=TRUE, eval=FALSE}
@@ -186,8 +184,17 @@ summary(g)
 #IGRAPH aa0dcd3 UNW- 40813 2224492 -- sub-0025864_ses-1_dwi_DS72784
 #+ attr: name (g/c), name (v/c), hemisphere (v/c), tissue (v/c), Y (v/c), weight (e/n)
 
-out <- sclust(g, weight="binary", embed="ASE", dmax=100, elb=NULL, Kmax=50, clustering="mclust") 
-# this takes ~30 min in our linux server
+out.ase <- sclust(g, embed="ASE", dmax=100, Kmax=50, clustering="mclust")
+out.lse <- sclust(g, embed="LSE", dmax=100, Kmax=50, clustering="mclust") 
+# Each run takes ~30 min in our linux server
+```
+```{r oneg2, echo=FALSE, eval=TRUE}
+load(url("http://www.cis.jhu.edu/~parky/TT/Data/out-sclust-ase-s1s1.Rbin"))
+load(url("http://www.cis.jhu.edu/~parky/TT/Data/out-sclust-lse-s1s1.Rbin"))
+```
+```{r oneg3, echo=TRUE, eval=TRUE}
+rbind(data.frame(embed="ASE", round(out.ase$mout$df,2)), data.frame(embed="LSE", round(out.lse$mout$df,2)))
+```
 out$mout$df
 ```
 
