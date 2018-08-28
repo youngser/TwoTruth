@@ -1,5 +1,5 @@
 ---
-title: "On a `Two Truths` Phenomenon in Spectral Graph Clustering"
+title: "On a 'Two Truths' Phenomenon in Spectral Graph Clustering"
 output: 
   bookdown::html_document2:
 #  html_document:
@@ -36,7 +36,7 @@ convincingly illustrated here via a diffusion MRI connectome data set:
 
 <figure>
 <img src="vignettes/killerfig-cep-g1.jpg" width="700px" />
-  <figcaption>Figure 1. Illustration of the Two Truths phenomenon.</figcaption>
+  <figcaption>Figure 1. A 'Two Truths' graph (connectome) depicting connectivity structure such that one grouping of the vertices yields affinity structure (e.g. left hemisphere/right hemisphere) and the other grouping yields core-periphery structure (e.g. gray matter/white matter). Top center: the graph with four vertex colors. Top left / top right: LSE groups one way; ASE groups another way. Bottom left: the LSE truth is two densely connected groups, with sparse interconnectivity between them (affinity structure). Bottom right: the ASE truth is one densely connected group, with sparse interconnectivity between it and the other group and sparse interconnectivity within the other group (core-periphery structure). This paper demonstrates the 'Two Truths' phenomenon illustrated in this figure - that LSE and ASE find fundamentally different but equally meaningful network structure - via theory, simulation, and real data analysis.</figcaption>
 </figure>
 
 
@@ -44,18 +44,18 @@ convincingly illustrated here via a diffusion MRI connectome data set:
 
 ## Data
 
-Here we make available the connectome data used for our illustration:
+Here we make available the connectome data used in our paper:
 114 graphs, and for each graph every vertex has a {Left,Right} label and a {Gray,White} label.
 
 NB:
 This is not meant to be a finding of neurscientific significance; 
 rather, this is an illustration of our ‘Two Truths’ phenomenon. 
-As such, we consider the largest connected component of binarized versions of the connectomes.
+As such, we consider binarized versions of the largest connected component of the graphs.
 (The original diffusion MRI connectomes are symmetric, hollow, and weighted.)
 
-The $m=114$ binary symmetric hollow graphs on $n \approx 40,000$ vertices
+The $m=114$ adjacency matrices on $n \approx 40,000$ vertices
 and associated vertex label attributes
-can be downloaded as an R object:
+can be downloaded as an R object.  NB: 8GB!
 
 
 ```r
@@ -100,7 +100,7 @@ table(V(glist[[1]])$Y)
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 1 </td>
+   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 01 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> scan 1 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 40813 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 9664 </td>
@@ -136,7 +136,7 @@ table(V(glist[[1]])$Y)
    
   </tr>
   <tr>
-   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 2 </td>
+   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 02 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> scan 1 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 40975 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 10177 </td>
@@ -172,7 +172,7 @@ table(V(glist[[1]])$Y)
    
   </tr>
   <tr>
-   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 3 </td>
+   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 03 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> scan 1 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 40421 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 10294 </td>
@@ -208,7 +208,7 @@ table(V(glist[[1]])$Y)
    
   </tr>
   <tr>
-   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 4 </td>
+   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 04 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> scan 1 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 40268 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 10192 </td>
@@ -244,7 +244,7 @@ table(V(glist[[1]])$Y)
    
   </tr>
   <tr>
-   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 5 </td>
+   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 05 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> scan 1 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 39710 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 9866 </td>
@@ -280,7 +280,7 @@ table(V(glist[[1]])$Y)
    
   </tr>
   <tr>
-   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 6 </td>
+   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 06 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> scan 1 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 39072 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 9125 </td>
@@ -316,7 +316,7 @@ table(V(glist[[1]])$Y)
    
   </tr>
   <tr>
-   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 7 </td>
+   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 07 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> scan 1 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 41599 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 10373 </td>
@@ -352,7 +352,7 @@ table(V(glist[[1]])$Y)
    
   </tr>
   <tr>
-   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 8 </td>
+   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 08 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> scan 1 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 39207 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 9453 </td>
@@ -388,7 +388,7 @@ table(V(glist[[1]])$Y)
    
   </tr>
   <tr>
-   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 9 </td>
+   <td style="text-align:center;font-weight: bold;vertical-align: middle !important;" rowspan="4"> 09 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> scan 1 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 40385 </td>
    <td style="text-align:center;vertical-align: middle !important;" rowspan="2"> 10013 </td>
@@ -2167,7 +2167,7 @@ We have left this graph in, as is.
 
 ## Code
 
-`R` code for the reproducing the experiemntal results presented in the manuscript is available in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
+`R` code for the reproducing the experiemntal results presented in the manuscript is available in the `demo` folder at [github](https://github.com/youngser/TwoTruth).
 
 
 ```r
@@ -2187,12 +2187,12 @@ library(TwoTruth)
 Figures from manuscript:
 
 <div class="figure">
-<img src="README_files/figure-html/fig6-1.png" alt="Results of the ($\widehat{d},\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\widehat{d} \in \{30,\dots,60\}$ and $\widehat{K} \in \{2,\dots,20\}$; for ASE we see $\widehat{d} \in \{2,\dots,20\}$ and $\widehat{K} \in \{10,\dots,50\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \{Left,Right\} and \{Gray,White\}, and shows that LSE clustering identifies $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identifies $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Our 'Two Truths' phenomenon is conclusively demonstrated: LSE finds $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE finds $\{\mbox{Gray},\mbox{White}\}$ (core-periphery)."  />
-<p class="caption">(\#fig:fig6)Results of the ($\widehat{d},\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\widehat{d} \in \{30,\dots,60\}$ and $\widehat{K} \in \{2,\dots,20\}$; for ASE we see $\widehat{d} \in \{2,\dots,20\}$ and $\widehat{K} \in \{10,\dots,50\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \{Left,Right\} and \{Gray,White\}, and shows that LSE clustering identifies $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identifies $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Our 'Two Truths' phenomenon is conclusively demonstrated: LSE finds $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE finds $\{\mbox{Gray},\mbox{White}\}$ (core-periphery).</p>
+<img src="README_files/figure-html/fig6-1.png" alt="(Fig. 6 in the manuscript) Results of the ($\widehat{d},\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\widehat{d} \in \{30,\dots,60\}$ and $\widehat{K} \in \{2,\dots,20\}$; for ASE we see $\widehat{d} \in \{2,\dots,20\}$ and $\widehat{K} \in \{10,\dots,50\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \{Left,Right\} and \{Gray,White\}, and shows that LSE clustering identifies $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identifies $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Our 'Two Truths' phenomenon is conclusively demonstrated: LSE finds $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE finds $\{\mbox{Gray},\mbox{White}\}$ (core-periphery)."  />
+<p class="caption">(\#fig:fig6)(Fig. 6 in the manuscript) Results of the ($\widehat{d},\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\widehat{d} \in \{30,\dots,60\}$ and $\widehat{K} \in \{2,\dots,20\}$; for ASE we see $\widehat{d} \in \{2,\dots,20\}$ and $\widehat{K} \in \{10,\dots,50\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \{Left,Right\} and \{Gray,White\}, and shows that LSE clustering identifies $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identifies $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Our 'Two Truths' phenomenon is conclusively demonstrated: LSE finds $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE finds $\{\mbox{Gray},\mbox{White}\}$ (core-periphery).</p>
 </div>
 <div class="figure">
-<img src="README_files/figure-html/fig7-1.png" alt="Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\{\mbox{Left},\mbox{Right}\}$ truth against the difference in ARI for the $\{\mbox{Gray},\mbox{White}\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identified $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Marginal histograms are provided. Our `Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE identifies $\{\mbox{Gray},\mbox{White}\}$ (core-periphery)."  />
-<p class="caption">(\#fig:fig7)Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\{\mbox{Left},\mbox{Right}\}$ truth against the difference in ARI for the $\{\mbox{Gray},\mbox{White}\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identified $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Marginal histograms are provided. Our `Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE identifies $\{\mbox{Gray},\mbox{White}\}$ (core-periphery).</p>
+<img src="README_files/figure-html/fig7-1.png" alt="(Fig. 7 in the manuscript) Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\{\mbox{Left},\mbox{Right}\}$ truth against the difference in ARI for the $\{\mbox{Gray},\mbox{White}\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identified $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Marginal histograms are provided. Our `Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE identifies $\{\mbox{Gray},\mbox{White}\}$ (core-periphery)."  />
+<p class="caption">(\#fig:fig7)(Fig. 7 in the manuscript) Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\{\mbox{Left},\mbox{Right}\}$ truth against the difference in ARI for the $\{\mbox{Gray},\mbox{White}\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\{\mbox{Left},\mbox{Right}\}$ better than $\{\mbox{Gray},\mbox{White}\}$ and ASE identified $\{\mbox{Gray},\mbox{White}\}$ better than $\{\mbox{Left},\mbox{Right}\}$. Marginal histograms are provided. Our `Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\{\mbox{Left},\mbox{Right}\}$ (affinity) while ASE identifies $\{\mbox{Gray},\mbox{White}\}$ (core-periphery).</p>
 </div>
 <div class="figure">
 <img src="README_files/figure-html/figS1-1.png" alt="$\widehat{d}$ for our 114 connectomes -- scree plots and ZG1."  />
@@ -2205,10 +2205,12 @@ Figures from manuscript:
 
 Generating figures from pre-calculated spectral clustering results:
 
-* Figure S1 ($\widehat{d}$ via Zhu \& Ghodsi): `demo(doFigS1)`    
-* Figure S2 ($\widehat{K}$ via MClust BIC):  `demo(doFigS2)`   
-* Figure 6 ($\widehat{d}$, $\widehat{K}$, and ARI): `demo(doFig6)`  
-* Figure 7 (ARI comparison): `demo(doFig7)` 
+* Figure S1 (spectral embedding dimension $\widehat{d}$ via Zhu \& Ghodsi): `demo(doFigS1)`    
+* Figure S2 (number of clusters $\widehat{K}$ via MClust BIC):  `demo(doFigS2)`   
+* Figure 6 ($\widehat{d}$, $\widehat{K}$, and ARI against {L,R} and against {G.W}): `demo(doFig6)`  
+* Figure 7 (ARI comparison demonstrating the 'Two Truths' phenomenon): `demo(doFig7)` 
+
+## One Graph
 
 Generating spectral clustering results from the data may take tens of hours.  
 Here is an example to run our spectral clustering on one graph:
@@ -2243,54 +2245,29 @@ rbind(data.frame(embed="ASE", round(out.ase$mout$df,2)), data.frame(embed="LSE",
 
 
 ```r
-library(help='TwoTruth')
 sessionInfo()
-```
 
-```
-## R version 3.4.2 (2017-09-28)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.5
-## 
-## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
-## 
-## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-##  [1] ggExtra_0.8        colorRamps_2.3     bindrcpp_0.2.2    
-##  [4] TwoTruth_0.1.0     knitr_1.20         forcats_0.2.0     
-##  [7] stringr_1.3.1      dplyr_0.7.6        purrr_0.2.5       
-## [10] readr_1.1.1        tidyr_0.7.2        tibble_1.4.2      
-## [13] ggplot2_3.0.0.9000 tidyverse_1.2.1    kableExtra_0.9.0  
-## 
-## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.18      lubridate_1.7.3   lattice_0.20-35  
-##  [4] assertthat_0.2.0  rprojroot_1.3-2   digest_0.6.15    
-##  [7] psych_1.7.5       mime_0.5          R6_2.2.2         
-## [10] cellranger_1.1.0  plyr_1.8.4        backports_1.1.2  
-## [13] evaluate_0.10.1   httr_1.3.1        highr_0.7        
-## [16] pillar_1.2.3      rlang_0.2.2       lazyeval_0.2.1   
-## [19] readxl_1.0.0      rstudioapi_0.7    miniUI_0.1.1.1   
-## [22] rmarkdown_1.10    labeling_0.3      selectr_0.3-1    
-## [25] foreign_0.8-69    munsell_0.5.0     shiny_1.1.0      
-## [28] broom_0.4.5       httpuv_1.4.5      compiler_3.4.2   
-## [31] modelr_0.1.1      xfun_0.3          pkgconfig_2.0.1  
-## [34] mnormt_1.5-5      htmltools_0.3.6   tidyselect_0.2.4 
-## [37] bookdown_0.7      XML_3.98-1.11     viridisLite_0.3.0
-## [40] later_0.7.3       crayon_1.3.4      withr_2.1.2      
-## [43] grid_3.4.2        xtable_1.8-2      nlme_3.1-131     
-## [46] jsonlite_1.5      gtable_0.2.0      magrittr_1.5     
-## [49] scales_1.0.0.9000 cli_1.0.0         stringi_1.2.3    
-## [52] reshape2_1.4.3    promises_1.0.1    xml2_1.2.0       
-## [55] tools_3.4.2       glue_1.2.0        hms_0.3          
-## [58] parallel_3.4.2    yaml_2.1.19       colorspace_1.3-2 
-## [61] rvest_0.3.2       bindr_0.1.1       haven_1.1.0
+R version 3.4.2 (2017-09-28)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS High Sierra 10.13.5
+
+Matrix products: default
+BLAS: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] TwoTruth_0.1.0
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.18    bookdown_0.7    digest_0.6.15   rprojroot_1.3-2 backports_1.1.2 magrittr_1.5   
+ [7] evaluate_0.10.1 stringi_1.2.3   rmarkdown_1.10  tools_3.4.2     stringr_1.3.1   xfun_0.3       
+[13] yaml_2.1.19     rsconnect_0.8   compiler_3.4.2  htmltools_0.3.6 knitr_1.20     
 ```
 
 -----
@@ -2298,4 +2275,4 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University  
  
-*prepared by <youngser@jhu.edu> on Mon Aug 27 15:33:33 2018*
+*prepared by <youngser@jhu.edu> on Tue Aug 28 11:07:40 2018*

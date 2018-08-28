@@ -1,21 +1,3 @@
----
-title: "On a `Two Truths` Phenomenon in Spectral Graph Clustering"
-output: 
-  bookdown::html_document2:
-#  html_document:
-    code_folding: show
-    keep_md: true
-#    css: ~/RFolder/pandoc.css
-    fig_caption: yes
-    fig_height: 4.5
-    fig_width: 4.5
-    number_sections: yes
-    toc: yes
-    toc_depth: 2
-editor_options: 
-  chunk_output_type: console
----
-
 ```{r setup, include=FALSE, results='asis'}
 suppressMessages(library(kableExtra))
 #suppressMessages(library(captioner))
@@ -27,6 +9,29 @@ suppressMessages(library(tidyverse))
 library(knitr)
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE,warning=FALSE, message=FALSE)
 
+
+# #Determine the output format of the document
+# outputFormat   = opts_knit$get("rmarkdown.pandoc.to")
+# 
+# #Figure and Table Caption Numbering, for HTML do it manually
+# capTabNo = 1; capFigNo = 1;
+# 
+# #Function to add the Table Number
+# capTab = function(x){
+#   if(outputFormat == 'html'){
+#     x = paste0("Table ",capTabNo,". ",x)
+#     capTabNo <<- capTabNo + 1
+#   }; x
+# }
+# 
+# #Function to add the Figure Number
+# capFig = function(x){
+#   if(outputFormat == 'html'){
+#     x = paste0("Figure ",capFigNo,". ",x)
+#     capFigNo <<- capFigNo + 1
+#   }; x
+# }
+
 #opts_knit$set(aliases=c(h='fig.height', w='fig.width', cap='fig.cap', scap='fig.scap'))                                                                               
 #opts_knit$set(eval.after = c('fig.cap','fig.scap'))                                                                            
 #knit_hooks$set(document = function(x) {                                                      #          gsub('(\\\\end\\{knitrout\\}[\n]+)', '\\1\\\\noindent ', x)                        #          })
@@ -34,6 +39,8 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE,warning=FALSE, message=FALSE)
 ```
 
 -----
+
+<H1><b>On a 'Two Truths' Phenomenon in Spectral Graph Clustering</b></H1>
 
 > Carey E. Priebe, Youngser Park, Joshua T. Vogelstein, John M. Conroy, Vince Lyzinskic, Minh Tang, Avanti Athreya, Joshua Cape, and Eric Bridgeford, "[On a 'Two Truths' Phenomenon in Spectral Graph Clustering](http://arxiv.org/abs/1808.07801)," _Proceedings of National Academy of Science_, submitted, 2018.
 
@@ -51,7 +58,7 @@ convincingly illustrated here via a diffusion MRI connectome data set:
 
 <figure>
 <img src="vignettes/killerfig-cep-g1.jpg" width="700px" />
-  <figcaption>Figure 1. Illustration of the Two Truths phenomenon.</figcaption>
+  <figcaption><b>Figure 1.</b> A 'Two Truths' graph (connectome) depicting connectivity structure such that one grouping of the vertices yields affinity structure (e.g. left hemisphere/right hemisphere) and the other grouping yields core-periphery structure (e.g. gray matter/white matter). Top center: the graph with four vertex colors. Top left / top right: LSE groups one way; ASE groups another way. Bottom left: the LSE truth is two densely connected groups, with sparse interconnectivity between them (affinity structure). Bottom right: the ASE truth is one densely connected group, with sparse interconnectivity between it and the other group and sparse interconnectivity within the other group (core-periphery structure). This paper demonstrates the 'Two Truths' phenomenon illustrated in this figure - that LSE and ASE find fundamentally different but equally meaningful network structure - via theory, simulation, and real data analysis.</figcaption>
 </figure>
 
 
@@ -59,18 +66,18 @@ convincingly illustrated here via a diffusion MRI connectome data set:
 
 ## Data
 
-Here we make available the connectome data used for our illustration:
+Here we make available the connectome data used in our paper:
 114 graphs, and for each graph every vertex has a {Left,Right} label and a {Gray,White} label.
 
 NB:
 This is not meant to be a finding of neurscientific significance; 
 rather, this is an illustration of our ‘Two Truths’ phenomenon. 
-As such, we consider the largest connected component of binarized versions of the connectomes.
+As such, we consider binarized versions of the largest connected component of the graphs.
 (The original diffusion MRI connectomes are symmetric, hollow, and weighted.)
 
-The $m=114$ binary symmetric hollow graphs on $n \approx 40,000$ vertices
+The $m=114$ adjacency matrices on $n \approx 40,000$ vertices
 and associated vertex label attributes
-can be downloaded as an R object:
+can be downloaded as an R object.  NB: 8GB!
 
 ```{r, echo=TRUE, eval=FALSE}
 print(load(url("http://www.cis.jhu.edu/~parky/TT/Data/TT-glist114-binary.rda"))) 
@@ -99,22 +106,29 @@ table(V(glist[[1]])$Y)
 # 9664 10748  9689 10712 
 ```
 
-```{r, echo=FALSE, eval=TRUE, fig.show='hold', fig.width=4.5, fig.height=4.5, fig.cap="Summary of data: number of vertices per graph by hemisphere/tissue type."}
+```{r, echo=FALSE, eval=TRUE, fig.show='hold', fig.width=4.5, fig.height=4.5, fig.cap="__Figure S1.__ Summary of data: number of vertices per graph by hemisphere/tissue type."}
 library(TwoTruth)
 data(twotruth)
 
+## fix the factor levels for "graph"
+twotruth$graph <- as.integer(as.character(twotruth$graph))
+twotruth$graph <- sprintf("%02d", twotruth$graph)
 twotruth %>% dplyr::select(c(2:8)) %>%
-kable("html", escape=F, digits=2, align = "c", caption="Summary of data: number of vertices per graph by hemisphere/tissue type.") %>%
+kable("html", escape=F, digits=2, align = "c", caption="__Table S1.__ Summary of data: number of vertices per graph by hemisphere/tissue type.") %>%
 	  kable_styling("striped", full_width = F) %>%
 	  column_spec(1, bold = T) %>%
 	  collapse_rows(columns = c(1:7)) %>%  #add_header_above(c(" " = 3, "scan 1" = 5, "scan 2" = 5)) %>%
 	  scroll_box(width = "600px", height = "500px")
 
 new.dd <- twotruth %>% dplyr::select(c(2:8)) %>% dplyr::select(-3) %>% gather(`n.LG`:`n.RW`, key="class", value="count") %>% unique()
-new.dd$graph <- factor(new.dd$graph, levels=paste(sort(as.integer(levels(new.dd$graph)))))
+#new.dd$graph <- factor(new.dd$graph, levels = order(levels(new.dd$graph)))
+#new.dd$graph <- factor(new.dd$graph, levels=paste(sort(as.integer(levels(new.dd$graph)))))
+#new.dd$graph <- factor(new.dd$graph, levels=paste(levels(new.dd$graph)))
 new.dd$count <- as.integer(new.dd$count)
+#new.dd <- new.dd %>% mutate(index=factor(paste(graph,scan)))
 new.dd <- new.dd %>% mutate(index=factor(paste(graph,scan)))
-levels(new.dd$index) <- as.character(1:length(levels(new.dd$index)))
+levels(new.dd$index) <- order(levels(new.dd$index))
+#levels(new.dd$index) <- as.character(1:length(levels(new.dd$index)))
 p1 <- ggplot(new.dd, aes(x=index, y=count, fill=class)) +
 	geom_bar(stat="identity") + #facet_grid(~scan) + 
 	theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "bottom") +
@@ -137,7 +151,7 @@ We have left this graph in, as is.
 
 ## Code
 
-`R` code for the reproducing the experiemntal results presented in the manuscript is available in the `demo` folder at [github](https://github.com/youngser/TwoTruth).)
+`R` code for the reproducing the experiemntal results presented in the manuscript is available in the `demo` folder at [github](https://github.com/youngser/TwoTruth).
 
 ```{r echo=TRUE}
 require(devtools)
@@ -152,27 +166,28 @@ devtools::install_github("youngser/TwoTruth")
 library(TwoTruth)
 ```
 
-Figures from manuscript:
-
-```{r fig6, echo=FALSE, eval=TRUE, fig.cap="Results of the ($\\widehat{d},\\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\\widehat{d} \\in \\{30,\\dots,60\\}$ and $\\widehat{K} \\in \\{2,\\dots,20\\}$; for ASE we see $\\widehat{d} \\in \\{2,\\dots,20\\}$ and $\\widehat{K} \\in \\{10,\\dots,50\\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \\{Left,Right\\} and \\{Gray,White\\}, and shows that LSE clustering identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Our \'Two Truths\' phenomenon is conclusively demonstrated: LSE finds $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE finds $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
-source("demo/doFig6.R")
-```
-```{r fig7, echo=FALSE, eval=TRUE, fig.cap="Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\\{\\mbox{Left},\\mbox{Right}\\}$ truth against the difference in ARI for the $\\{\\mbox{Gray},\\mbox{White}\\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identified $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Marginal histograms are provided. Our `Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
-source("demo/doFig7.R")
-```
-```{r figS1, echo=FALSE, eval=TRUE, fig.cap="$\\widehat{d}$ for our 114 connectomes -- scree plots and ZG1."}
+```{r figS1, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S2.__ Spectral embedding dimension $\\widehat{d}$ via Zhu & Ghodsi for our 114 connectomes."}
 source("demo/doFigS1.R")
 ```
-```{r figS2, echo=FALSE, eval=TRUE, fig.cap="$\\widehat{K}$ for our 114 connectomes -- BIC curves."}
+```{r figS2, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S3.__ Number of clusters $\\widehat{K}$ voa Mclust BIC for our 114 connectomes."}
 source("demo/doFigS2.R")
+```
+
+```{r fig6, echo=FALSE, eval=TRUE, fig.cap="__Figure 6.__ Results of the ($\\widehat{d},\\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\\widehat{d} \\in \\{30,\\dots,60\\}$ and $\\widehat{K} \\in \\{2,\\dots,20\\}$; for ASE we see $\\widehat{d} \\in \\{2,\\dots,20\\}$ and $\\widehat{K} \\in \\{10,\\dots,50\\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \\{Left,Right\\} and \\{Gray,White\\}, and shows that LSE clustering identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Our \'Two Truths\' phenomenon is conclusively demonstrated: LSE finds $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE finds $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
+source("demo/doFig6.R")
+```
+```{r fig7, echo=FALSE, eval=TRUE, fig.cap="__Figure 7.__ Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\\{\\mbox{Left},\\mbox{Right}\\}$ truth against the difference in ARI for the $\\{\\mbox{Gray},\\mbox{White}\\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identified $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Marginal histograms are provided. Our 'Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
+source("demo/doFig7.R")
 ```
 
 Generating figures from pre-calculated spectral clustering results:
 
-* Figure S1 ($\widehat{d}$ via Zhu \& Ghodsi): `demo(doFigS1)`    
-* Figure S2 ($\widehat{K}$ via MClust BIC):  `demo(doFigS2)`   
-* Figure 6 ($\widehat{d}$, $\widehat{K}$, and ARI): `demo(doFig6)`  
-* Figure 7 (ARI comparison): `demo(doFig7)` 
+* Figure S2 (spectral embedding dimension $\widehat{d}$ via Zhu \& Ghodsi): `demo(doFigS1)`    
+* Figure S3 (number of clusters $\widehat{K}$ via Mclust BIC):  `demo(doFigS2)`   
+* Figure 6 ($\widehat{d}$, $\widehat{K}$, and ARI against {Left, Right} and against {Gray, White}): `demo(doFig6)`  
+* Figure 7 (ARI comparison demonstrating the 'Two Truths' phenomenon): `demo(doFig7)` 
+
+## One Graph
 
 Generating spectral clustering results from the data may take tens of hours.  
 Here is an example to run our spectral clustering on one graph:
@@ -200,9 +215,30 @@ rbind(data.frame(embed="ASE", round(out.ase$mout$df,2)), data.frame(embed="LSE",
 
 # Software and Hardware Information
 
-```{r vn,echo=TRUE, eval=TRUE}
-library(help='TwoTruth')
+```{r vn,echo=TRUE, eval=FALSE}
 sessionInfo()
+
+R version 3.4.2 (2017-09-28)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS High Sierra 10.13.5
+
+Matrix products: default
+BLAS: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] TwoTruth_0.1.0
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.18    bookdown_0.7    digest_0.6.15   rprojroot_1.3-2 backports_1.1.2 magrittr_1.5   
+ [7] evaluate_0.10.1 stringi_1.2.3   rmarkdown_1.10  tools_3.4.2     stringr_1.3.1   xfun_0.3       
+[13] yaml_2.1.19     rsconnect_0.8   compiler_3.4.2  htmltools_0.3.6 knitr_1.20     
 ```
 
 -----
