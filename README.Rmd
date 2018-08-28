@@ -1,3 +1,18 @@
+---
+output:
+  bookdown::html_document2:
+#  html_document:
+#    code_folding: show
+    keep_md: true
+#    css: ~/RFolder/pandoc.css
+#    fig_caption: yes
+    fig_height: 4.5
+    fig_width: 4.5
+#    number_sections: yes
+#    toc: yes
+#    toc_depth: 2
+---
+
 ```{r setup, include=FALSE, results='asis'}
 suppressMessages(library(kableExtra))
 #suppressMessages(library(captioner))
@@ -9,6 +24,9 @@ suppressMessages(library(tidyverse))
 library(knitr)
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE,warning=FALSE, message=FALSE)
 
+#x <- rmarkdown::render("README.Rmd", run_pandoc = FALSE, clean = FALSE)
+#knit_meta <- attr(x, "knit_meta") 
+#rmarkdown::render(input = 'README.md', knit_meta = knit_meta )
 
 # #Determine the output format of the document
 # outputFormat   = opts_knit$get("rmarkdown.pandoc.to")
@@ -169,7 +187,7 @@ library(TwoTruth)
 ```{r figS1, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S2.__ Spectral embedding dimension $\\widehat{d}$ via Zhu & Ghodsi for our 114 connectomes."}
 source("demo/doFigS1.R")
 ```
-```{r figS2, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S3.__ Number of clusters $\\widehat{K}$ voa Mclust BIC for our 114 connectomes."}
+```{r figS2, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S3.__ Number of clusters $\\widehat{K}$ via Mclust BIC for our 114 connectomes."}
 source("demo/doFigS2.R")
 ```
 
