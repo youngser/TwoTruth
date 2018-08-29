@@ -53,6 +53,10 @@ getLCC <- function(g, weight="binary", thresh=0)
     return(ght.lcc)
 }
 
+# alg:
+#  ZG: Zhu & Ghodsi
+#  manual: manual dhat
+#  else: which(val > 2*sqrt(dmax))
 doEmbed <- function(g, dmax, embed="ASE", abs="abs", alg="ZG", plot.elbow=FALSE)
 {
     if (embed=="ASE") {
@@ -76,10 +80,12 @@ doEmbed <- function(g, dmax, embed="ASE", abs="abs", alg="ZG", plot.elbow=FALSE)
     if (alg=="ZG") {
         elb <- getElbows(val, plot=plot.elbow,
                          main=paste0(embed,": Elbows for ", gname))
+    } else if (alg == "manual") {
+        elb <- dmax
     } else {
         elb <- which(val > 2*sqrt(length(val)))
     }
-    #	elb[1] <- ifelse(elb[1]==1,2,elb[1])
+        #	elb[1] <- ifelse(elb[1]==1,2,elb[1])
     return(list(embed=emb, elbow=elb))
 }
 
