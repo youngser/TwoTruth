@@ -1,3 +1,15 @@
+---
+output: 
+  bookdown::html_document2:
+    code_folding: hide
+    keep_md: true
+    fig_caption: yes
+    fig_height: 4.5
+    fig_width: 4.5
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+---
 
 ```{r setup, include=FALSE, results='asis'}
 suppressMessages(library(kableExtra))

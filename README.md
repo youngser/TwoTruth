@@ -1,16 +1,14 @@
 ---
-output:
+output: 
   bookdown::html_document2:
-#  html_document:
-#    code_folding: show
+    code_folding: hide
     keep_md: true
-#    css: ~/RFolder/pandoc.css
-#    fig_caption: yes
+    fig_caption: yes
     fig_height: 4.5
     fig_width: 4.5
-#    number_sections: yes
-#    toc: yes
-#    toc_depth: 2
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
 ---
 
 
@@ -2230,13 +2228,13 @@ out.lse <- sclust(g, embed="LSE", dmax=100, Kmax=50, clustering="mclust")
 
 
 ```r
-rbind(data.frame(embed="ASE", round(out.ase$mout$df,2)), data.frame(embed="LSE", round(out.lse$mout$df,2)))
+rbind(data.frame(embed="ASE", round(out.ase$mout$df[,-5],2)), data.frame(embed="LSE", round(out.lse$mout$df[,-5],2)))
 ```
 
 ```
-##   embed dhat Khat   LR   GW LRGW
-## 1   ASE   15   39 0.01 0.04 0.04
-## 2   LSE   46   10 0.03 0.01 0.02
+##   embed dhat Khat   LR   GW
+## 1   ASE   15   39 0.01 0.04
+## 2   LSE   46   10 0.03 0.01
 ```
 
 # Software and Hardware Information
@@ -2273,4 +2271,4 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University  
  
-*prepared by <youngser@jhu.edu> on Tue Aug 28 12:46:43 2018*
+*prepared by <youngser@jhu.edu> on Wed Aug 29 10:28:36 2018*
