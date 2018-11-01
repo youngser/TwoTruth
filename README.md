@@ -201,6 +201,9 @@ Here is an example to run our spectral clustering on one graph:
     df <- data.frame(embed=c("ASE","LSE"), round(rbind(out.ase$mout$df[,-5], 
                                                        out.lse$mout$df[,-5]),2))
     df
+    #  embed dhat Khat   LR   GW
+    #1   ASE   15   39 0.01 0.04
+    #2   LSE   46   10 0.03 0.01
 
 Simulation
 ----------
@@ -243,4 +246,4 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University
 
-*prepared by <youngser@jhu.edu> on Thu Nov 1 10:01:23 2018*
+*prepared by <youngser@jhu.edu> on Thu Nov 1 10:03:49 2018*

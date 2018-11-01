@@ -269,6 +269,9 @@ load("~/Dropbox/MRC/out-sclust-ase-lse-s1s1.Rbin")
 df <- data.frame(embed=c("ASE","LSE"), round(rbind(out.ase$mout$df[,-5], 
                                                    out.lse$mout$df[,-5]),2))
 df
+#  embed dhat Khat   LR   GW
+#1   ASE   15   39 0.01 0.04
+#2   LSE   46   10 0.03 0.01
 ```
 ```{r oneg4, echo=FALSE, eval=FALSE, tidy=FALSE}
 df <- data.frame(embed=c("ASE","LSE"), rbind(out.ase$mout$df[,-5], 
