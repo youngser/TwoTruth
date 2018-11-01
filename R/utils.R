@@ -30,6 +30,33 @@ giant.component <- function(graph, ...)
     induced.subgraph(graph, which(cl$membership == which.max(cl$csize)))
 }
 
+getLCC.sim <- function(g, weight="ptr", use4=TRUE, thresh=0, label=c("L","R","G","W"))
+{
+    ## use vertices of LR & GW !!
+    if (use4) {
+        g <- induced_subgraph(g,
+                              V(g)[hemisphere %in% label[1:2] &
+                                       tissue %in% label[3:4]])
+    }
+
+    g <- giant.component(g)
+    #	table(V(gtt.lcc)$hemisphere, V(gtt.lcc)$tissue)
+    #	is.connected(gtt.lcc)
+
+    if (is.weighted(g)) {
+        if (weight=="ptr") {
+            g <- ptr(g)
+        } else if (weight=="binary") {
+            #			g <- delete_edge_attr(g,"weight")
+            E(g)$weight <- ifelse(E(g)$weight>thresh,1,0)
+        }
+    }
+
+    return(g)
+}
+
+
+
 getLCC <- function(g, weight="binary", thresh=0)
 {
     ## use vertices of LR & GW !!
@@ -127,6 +154,46 @@ doMclust <- function(X, Kmax, g, plot.bic=FALSE, verbose=FALSE, M=3000)
     return(list(mout=mout, df=df))
 }
 
+doMclust.sim <- function(X, Kmax, g, plot.bic=FALSE, verbose=FALSE, M=1000, models=NULL)
+{
+    if (length(Kmax)>1) {
+        Kmin <- Kmax[1]; Kmax <- Kmax[2]
+    } else {
+        Kmin <- 2; Kmax <- Kmax
+    }
+
+    if (ncol(X)==1) {
+        if (is.null(models)) models <- c("E","V")
+        M <- nrow(X)
+    } else {
+        if (nrow(X) > M) {
+            if (is.null(models)) models <- c("VII","VEI","VVI","VEE","VVE","VEV","VVV")
+        } else {
+            M <- nrow(X)
+            if (is.null(models)) models <- mclust.options("emModelNames")
+        }
+    }
+
+    mout <- Mclust(X, Kmin:Kmax, verbose=verbose, modelNames=models, initialization=list(subset=sample(1:nrow(X), size=M)))
+
+    #	mout <- Mclust(X, 2:Kmax, verbose=verbose)
+    Yhat <- mout$class
+    if (plot.bic) plot(mout, what="BIC", legendArgs = list(cex=0.5))
+    #	table(V(out.g1)$hemisphere, Yhat1);
+    ari.LR <- adjustedRandIndex(V(g)$hemisphere, Yhat)
+    #	table(V(out.g1)$tissue, Yhat1);
+    ari.GW <- adjustedRandIndex(V(g)$tissue, Yhat)
+    #	table(V(out.g1)$Y, Yhat1);
+    ari.LRGW <- adjustedRandIndex(V(g)$Y, Yhat)
+
+    df <- data.frame(dhat=ncol(X), Khat=mout$G, LR=ari.LR, GW=ari.GW, LRGW=ari.LRGW)
+    if (verbose) print(df)
+
+    return(list(mout=mout, df=df))
+}
+
+
+
 doKmeans <- function(X, Kmax, g, plot.bic=FALSE, verbose=FALSE, M=3000)
 {
     if (length(Kmax)>1) {
@@ -158,12 +225,12 @@ doKmeans <- function(X, Kmax, g, plot.bic=FALSE, verbose=FALSE, M=3000)
 }
 
 
-sclust <- function(g, weight="binary", embed="ASE", dmax=100, elb=NULL, Kmax=50, clustering="mclust") #was 70
+sclust <- function(g, weight="binary", embed="ASE", dmax=100, alg="ZG", elb=NULL, Kmax=50, clustering="mclust") #was 70
 {
     lcc <- getLCC(g, weight=weight)
     Bout <- getB(lcc)
     #	emb.out <- doEmbed(lcc, dmax, embed, abs="noabs", plot.elbow = FALSE);
-    emb.out <- doEmbed(lcc, dmax, embed, abs="abs", plot.elbow = FALSE);
+    emb.out <- doEmbed(lcc, dmax, embed, abs="abs", alg=alg, plot.elbow = FALSE);
     emb <- emb.out$embed;
     if (is.null(elb)) {
         X <- emb$X[,1:max(2, emb.out$elbow[1])]

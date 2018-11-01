@@ -19,7 +19,9 @@ getB2 <- function (A, Y)
 
 getB <- function(g, verbose=FALSE)
 {
-    library(Matrix)
+    suppressMessages(library(tidyverse))
+    suppressMessages(library(Matrix))
+
     df <- as.tibble(data.frame(v=as.numeric(V(g)$name),
                                hemisphere=V(g)$hemisphere,
                                tissue=V(g)$tissue,

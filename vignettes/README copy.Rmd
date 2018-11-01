@@ -1,39 +1,24 @@
----
-title: "On a `Two Truths` Phenomenon in Spectral Graph Clustering"
-author: "Department of Applied Mathematics and Statistics, <br />Johns Hopkins University<br />"
-date: "`r date()`"
-output: 
-  md_document:
-    toc: yes
-    toc_depth: 2
-    df_print: paged
-    md_extensions: +autolink_bare_uris-hard_line_breaks+tex_math_single_backslash
-  github_document:
-    toc: yes
-    toc_depth: 2
-    df_print: paged
-    md_extensions: +autolink_bare_uris-hard_line_breaks+tex_math_single_backslash
-  bookdown::html_document2:
-    code_folding: hide
-    keep_md: true
-#    df_print: paged
-    fig_caption: yes
-    fig_height: 4.5
-    fig_width: 4.5
-    number_sections: yes
-editor_options: 
-  chunk_output_type: console
----
+<!-- output:  -->
+<!--   bookdown::html_document2: -->
+<!--     code_folding: hide -->
+<!--     keep_md: true -->
+<!--     fig_caption: yes -->
+<!--     fig_height: 4.5 -->
+<!--     fig_width: 4.5 -->
+<!--     number_sections: yes -->
+<!--     toc: yes -->
+<!--     toc_depth: 2 -->
+
 
 ```{r setup, include=FALSE, results='asis'}
-suppressMessages(library(knitr))
-#suppressMessages(library(kableExtra))
+suppressMessages(library(kableExtra))
 #suppressMessages(library(captioner))
 #tab_nums <- captioner(prefix="Table")
 #fig_nums <- captioner()
 
 suppressMessages(library(tidyverse))
 
+library(knitr)
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE,warning=FALSE, message=FALSE)
 
 #x <- rmarkdown::render("README.Rmd", run_pandoc = FALSE, clean = FALSE)
@@ -70,7 +55,7 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE,warning=FALSE, message=FALSE)
 
 -----
 
-<!-- <H1><b>On a 'Two Truths' Phenomenon in Spectral Graph Clustering</b></H1> -->
+<H1><b>On a 'Two Truths' Phenomenon in Spectral Graph Clustering</b></H1>
 
 > Carey E. Priebe, Youngser Park, Joshua T. Vogelstein, John M. Conroy, Vince Lyzinskic, Minh Tang, Avanti Athreya, Joshua Cape, and Eric Bridgeford, "[On a 'Two Truths' Phenomenon in Spectral Graph Clustering](http://arxiv.org/abs/1808.07801)," _Proceedings of National Academy of Science_, submitted, 2018.
 
@@ -86,9 +71,11 @@ convincingly illustrated here via a diffusion MRI connectome data set:
  
 > **Keywords**: Spectral Embedding, Spectral Clustering, Graph, Network, Connectome
 
-```{r, echo=FALSE, eval=TRUE, fig.cap="__Figure 1.__ A 'Two Truths' graph (connectome) depicting connectivity structure such that one grouping of the vertices yields affinity structure (e.g. left hemisphere/right hemisphere) and the other grouping yields core-periphery structure (e.g. gray matter/white matter). Top center: the graph with four vertex colors. Top left / top right: LSE groups one way; ASE groups another way. Bottom left: the LSE truth is two densely connected groups, with sparse interconnectivity between them (affinity structure). Bottom right: the ASE truth is one densely connected group, with sparse interconnectivity between it and the other group and sparse interconnectivity within the other group (core-periphery structure). This paper demonstrates the 'Two Truths' phenomenon illustrated in this figure - that LSE and ASE find fundamentally different but equally meaningful network structure - via theory, simulation, and real data analysis."}
-knitr::include_graphics("vignettes/killerfig-cep-g1.jpg")
-```
+<figure>
+<img src="vignettes/killerfig-cep-g1.jpg" width="700px" />
+  <figcaption><b>Figure 1.</b> A 'Two Truths' graph (connectome) depicting connectivity structure such that one grouping of the vertices yields affinity structure (e.g. left hemisphere/right hemisphere) and the other grouping yields core-periphery structure (e.g. gray matter/white matter). Top center: the graph with four vertex colors. Top left / top right: LSE groups one way; ASE groups another way. Bottom left: the LSE truth is two densely connected groups, with sparse interconnectivity between them (affinity structure). Bottom right: the ASE truth is one densely connected group, with sparse interconnectivity between it and the other group and sparse interconnectivity within the other group (core-periphery structure). This paper demonstrates the 'Two Truths' phenomenon illustrated in this figure - that LSE and ASE find fundamentally different but equally meaningful network structure - via theory, simulation, and real data analysis.</figcaption>
+</figure>
+
 
 # Supplemental Information (SI)
 
@@ -134,19 +121,19 @@ table(V(glist[[1]])$Y)
 # 9664 10748  9689 10712 
 ```
 
-```{r figS0, echo=FALSE, eval=FALSE, fig.show='hold', fig.width=9, fig.height=4.5, fig.cap="__Figure S1.__ Summary of data: number of vertices per graph by hemisphere/tissue type."}
+```{r, echo=FALSE, eval=TRUE, fig.show='hold', fig.width=4.5, fig.height=4.5, fig.cap="__Figure S1.__ Summary of data: number of vertices per graph by hemisphere/tissue type."}
 library(TwoTruth)
 data(twotruth)
 
 ## fix the factor levels for "graph"
 twotruth$graph <- as.integer(as.character(twotruth$graph))
 twotruth$graph <- sprintf("%02d", twotruth$graph)
-twotruth %>% dplyr::select(c(2:8)) #%>%
-# kable("html", escape=F, digits=2, align = "c", caption="__Table S1.__ Summary of data: number of vertices per graph by hemisphere/tissue type.") %>%
-# 	  kable_styling("striped", full_width = F) %>%
-# 	  column_spec(1, bold = T) %>%
-# 	  collapse_rows(columns = c(1:7)) %>%  #add_header_above(c(" " = 3, "scan 1" = 5, "scan 2" = 5)) %>%
-# 	  scroll_box(width = "600px", height = "500px")
+twotruth %>% dplyr::select(c(2:8)) %>%
+kable("html", escape=F, digits=2, align = "c", caption="__Table S1.__ Summary of data: number of vertices per graph by hemisphere/tissue type.") %>%
+	  kable_styling("striped", full_width = F) %>%
+	  column_spec(1, bold = T) %>%
+	  collapse_rows(columns = c(1:7)) %>%  #add_header_above(c(" " = 3, "scan 1" = 5, "scan 2" = 5)) %>%
+	  scroll_box(width = "600px", height = "500px")
 
 new.dd <- twotruth %>% dplyr::select(c(2:8)) %>% dplyr::select(-3) %>% gather(`n.LG`:`n.RW`, key="class", value="count") %>% unique()
 #new.dd$graph <- factor(new.dd$graph, levels = order(levels(new.dd$graph)))
@@ -162,18 +149,13 @@ p1 <- ggplot(new.dd, aes(x=index, y=count, fill=class)) +
 	theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "bottom") +
 	theme(legend.title=element_blank()) +
 	scale_x_discrete(breaks=as.character(seq(5,max(as.numeric(new.dd$index)),by=5)))
-#print(p1)
+print(p1)
 p2 <- new.dd %>% filter(count>3000) %>%
 	ggplot(aes(x=class, y=count, fill=class)) + 
     geom_point(aes(col=class), alpha=0.5, position = position_jitterdodge(jitter.width=0.3)) +
 	geom_boxplot(alpha=0.7, notch=TRUE, outlier.size = 0) +
 	theme(legend.title=element_blank(), legend.position = "bottom")
-#print(p2)
-require(egg)
-ggarrange(p1,p2, widths=c(1,1))
-```
-```{r figS02, echo=FALSE, eval=TRUE, fig.show='hold', fig.width=9, fig.height=4.5, fig.cap="__Figure S1.__ Summary of data: number of vertices per graph by hemisphere/tissue type."}
-knitr::include_graphics("figure/figS0-12.png")
+print(p2)
 ```
 
 Note that there is one bad graph in the data set: 
@@ -199,22 +181,18 @@ devtools::install_github("youngser/TwoTruth")
 library(TwoTruth)
 ```
 
-```{r figS2, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S2.__ Spectral embedding dimension $\\widehat{d}$ via Zhu & Ghodsi for our 114 connectomes."}
-knitr::include_graphics("figure/figS1-1.png")
-#source("demo/doFigS1.R")
+```{r figS1, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S2.__ Spectral embedding dimension $\\widehat{d}$ via Zhu & Ghodsi for our 114 connectomes."}
+source("demo/doFigS1.R")
 ```
-```{r figS3, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S3.__ Number of clusters $\\widehat{K}$ via Mclust BIC for our 114 connectomes."}
-knitr::include_graphics("figure/figS2-1.png")
-#source("demo/doFigS2.R")
+```{r figS2, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S3.__ Number of clusters $\\widehat{K}$ via Mclust BIC for our 114 connectomes."}
+source("demo/doFigS2.R")
 ```
 
 ```{r fig6, echo=FALSE, eval=TRUE, fig.cap="__Figure 6.__ Results of the ($\\widehat{d},\\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\\widehat{d} \\in \\{30,\\dots,60\\}$ and $\\widehat{K} \\in \\{2,\\dots,20\\}$; for ASE we see $\\widehat{d} \\in \\{2,\\dots,20\\}$ and $\\widehat{K} \\in \\{10,\\dots,50\\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \\{Left,Right\\} and \\{Gray,White\\}, and shows that LSE clustering identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Our \'Two Truths\' phenomenon is conclusively demonstrated: LSE finds $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE finds $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
-knitr::include_graphics("figure/fig6-1.png")
-#source("demo/doFig6.R")
+source("demo/doFig6.R")
 ```
 ```{r fig7, echo=FALSE, eval=TRUE, fig.cap="__Figure 7.__ Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\\{\\mbox{Left},\\mbox{Right}\\}$ truth against the difference in ARI for the $\\{\\mbox{Gray},\\mbox{White}\\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identified $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Marginal histograms are provided. Our 'Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
-knitr::include_graphics("figure/fig7-1.png")
-#source("demo/doFig7.R")
+source("demo/doFig7.R")
 ```
 
 Generating figures from pre-calculated spectral clustering results:
@@ -265,12 +243,12 @@ load("~/Dropbox/MRC/out-sclust-ase-lse-s1s1.Rbin")
 #             c(embed="ASE", round(out.ase$mout$df[,-5],2)),
 #             c(embed="LSE", round(out.lse$mout$df[,-5],2)))
 ```
-```{r oneg3, echo=TRUE, eval=TRUE}
+```{r oneg3, echo=TRUE, eval=FALSE}
 df <- data.frame(embed=c("ASE","LSE"), round(rbind(out.ase$mout$df[,-5], 
                                                    out.lse$mout$df[,-5]),2))
 df
 ```
-```{r oneg4, echo=FALSE, eval=FALSE, tidy=FALSE}
+```{r oneg4, echo=FALSE, eval=TRUE, tidy=FALSE}
 df <- data.frame(embed=c("ASE","LSE"), rbind(out.ase$mout$df[,-5], 
                                              out.lse$mout$df[,-5]))
 #options(knitr.table.format = "html") 
@@ -307,11 +285,12 @@ ggplot(df2, aes(x=value, y=..scaled.., fill = key, colour = key)) +
     facet_grid(embed~.) + labs(x="ARI", y="scaled density") +
     geom_vline(data=dfA, aes(xintercept = value, color=key, linetype="dashed"), size=0.7) +
     scale_linetype_manual(name="stat", values = c("dashed" = 2, "solid" = 1), labels = c("alt", "null"))
+
 ```
 
-```{r anyk, eval=FALSE, echo=FALSE}
-#can you do this null for all K = 1,2,...,50?
+can you do this null for all K = 1,2,...,50?
 
+```{r anyk, eval=FALSE, echo=FALSE}
 n <- vcount(out.ase$g)
 set.seed(12345)
 df0.k <- NULL
@@ -332,7 +311,7 @@ for (k in 1:50) {
 df0K <- Reduce('rbind', df0.k)
 save(df0K, file="df0K.Rbin")
 ```
-```{r allk, echo=FALSE, eval=FALSE}
+```{r allk, echo=FALSE, eval=TRUE}
 load("df0K.Rbin")
 df2 <- gather(df0K, `LR`:`GW`, key="key", value="value")
 dfA <- gather(df[,-c(2,3)], `LR`:`GW`, key="key", value="value")
@@ -349,15 +328,6 @@ ggplot(df2, aes(x=value, y=..scaled.., fill = factor(K), colour = factor(K))) +
     labs(x="ARI", y="scaled density") #+
 
 ```
-
-## Simulation
-
-To run a simple simulation using the synthetic data based on the real 4 x 4 `B` matrix, please do
-
-```{r sim, eval=FALSE}
-demo(simulation)
-```
-
 # Software and Hardware Information
 
 ```{r vn,echo=TRUE, eval=FALSE}
