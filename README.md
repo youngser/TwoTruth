@@ -202,14 +202,6 @@ Here is an example to run our spectral clustering on one graph:
                                                        out.lse$mout$df[,-5]),2))
     df
 
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["embed"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["dhat"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Khat"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LR"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["GW"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"ASE","2":"15","3":"39","4":"0.01","5":"0.04"},{"1":"LSE","2":"46","3":"10","4":"0.03","5":"0.01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-
-With the ARI null distribution (via permutations):
-
-<img src="README_files/figure-markdown_strict/null-1.png" style="display: block; margin: auto;" />
-
 Simulation
 ----------
 
@@ -251,4 +243,4 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University
 
-*prepared by <youngser@jhu.edu> on Thu Nov 1 09:59:28 2018*
+*prepared by <youngser@jhu.edu> on Thu Nov 1 10:01:23 2018*

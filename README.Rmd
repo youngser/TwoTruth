@@ -243,7 +243,7 @@ summary(g)
 out.ase <- sclust(g, embed="ASE", dmax=100, Kmax=50, clustering="mclust")
 out.lse <- sclust(g, embed="LSE", dmax=100, Kmax=50, clustering="mclust") 
 ```
-```{r oneg2, echo=FALSE, eval=TRUE}
+```{r oneg2, echo=FALSE, eval=FALSE}
 # Embed into 2-dimension and cluster into 2 groups
 #out.ase2 <- sclust(g, embed="ASE", dmax=2, elb=2, Kmax=2, clustering="mclust")
 #out.lse2 <- sclust(g, embed="LSE", dmax=2, elb=2, Kmax=2, clustering="mclust") 
@@ -265,7 +265,7 @@ load("~/Dropbox/MRC/out-sclust-ase-lse-s1s1.Rbin")
 #             c(embed="ASE", round(out.ase$mout$df[,-5],2)),
 #             c(embed="LSE", round(out.lse$mout$df[,-5],2)))
 ```
-```{r oneg3, echo=TRUE, eval=TRUE}
+```{r oneg3, echo=TRUE, eval=FALSE}
 df <- data.frame(embed=c("ASE","LSE"), round(rbind(out.ase$mout$df[,-5], 
                                                    out.lse$mout$df[,-5]),2))
 df
@@ -282,9 +282,9 @@ df %>% mutate(
   column_spec(1, bold = T) #%>%
 ```
 
-With the ARI null distribution (via permutations):
+```{r null, echo=FALSE, eval=FALSE, fig.align='center'}
+#With the ARI null distribution (via permutations):
 
-```{r null, echo=FALSE, eval=TRUE, fig.align='center'}
 suppressMessages(require(igraph))
 suppressMessages(require(mclust))
 set.seed(12345)
