@@ -86,7 +86,7 @@ convincingly illustrated here via a diffusion MRI connectome data set:
  
 > **Keywords**: Spectral Embedding, Spectral Clustering, Graph, Network, Connectome
 
-```{r, echo=FALSE, eval=TRUE, fig.cap="__Figure 1.__ A 'Two Truths' graph (connectome) depicting connectivity structure such that one grouping of the vertices yields affinity structure (e.g. left hemisphere/right hemisphere) and the other grouping yields core-periphery structure (e.g. gray matter/white matter). Top center: the graph with four vertex colors. Top left / top right: LSE groups one way; ASE groups another way. Bottom left: the LSE truth is two densely connected groups, with sparse interconnectivity between them (affinity structure). Bottom right: the ASE truth is one densely connected group, with sparse interconnectivity between it and the other group and sparse interconnectivity within the other group (core-periphery structure). This paper demonstrates the 'Two Truths' phenomenon illustrated in this figure - that LSE and ASE find fundamentally different but equally meaningful network structure - via theory, simulation, and real data analysis."}
+```{r, echo=FALSE, eval=TRUE, fig.cap="Figure 1. A 'Two Truths' graph (connectome) depicting connectivity structure such that one grouping of the vertices yields affinity structure (e.g. left hemisphere/right hemisphere) and the other grouping yields core-periphery structure (e.g. gray matter/white matter). Top center: the graph with four vertex colors. Top left / top right: LSE groups one way; ASE groups another way. Bottom left: the LSE truth is two densely connected groups, with sparse interconnectivity between them (affinity structure). Bottom right: the ASE truth is one densely connected group, with sparse interconnectivity between it and the other group and sparse interconnectivity within the other group (core-periphery structure). This paper demonstrates the 'Two Truths' phenomenon illustrated in this figure - that LSE and ASE find fundamentally different but equally meaningful network structure - via theory, simulation, and real data analysis."}
 knitr::include_graphics("vignettes/killerfig-cep-g1.jpg")
 ```
 
@@ -134,7 +134,7 @@ table(V(glist[[1]])$Y)
 # 9664 10748  9689 10712 
 ```
 
-```{r figS0, echo=FALSE, eval=FALSE, fig.show='hold', fig.width=9, fig.height=4.5, fig.cap="__Figure S1.__ Summary of data: number of vertices per graph by hemisphere/tissue type."}
+```{r figS0, echo=FALSE, eval=FALSE, fig.show='hold', fig.width=9, fig.height=4.5, fig.cap="Figure S1. Summary of data: number of vertices per graph by hemisphere/tissue type."}
 library(TwoTruth)
 data(twotruth)
 
@@ -142,7 +142,7 @@ data(twotruth)
 twotruth$graph <- as.integer(as.character(twotruth$graph))
 twotruth$graph <- sprintf("%02d", twotruth$graph)
 twotruth %>% dplyr::select(c(2:8)) #%>%
-# kable("html", escape=F, digits=2, align = "c", caption="__Table S1.__ Summary of data: number of vertices per graph by hemisphere/tissue type.") %>%
+# kable("html", escape=F, digits=2, align = "c", caption="Table S1. Summary of data: number of vertices per graph by hemisphere/tissue type.") %>%
 # 	  kable_styling("striped", full_width = F) %>%
 # 	  column_spec(1, bold = T) %>%
 # 	  collapse_rows(columns = c(1:7)) %>%  #add_header_above(c(" " = 3, "scan 1" = 5, "scan 2" = 5)) %>%
@@ -172,7 +172,7 @@ p2 <- new.dd %>% filter(count>3000) %>%
 require(egg)
 ggarrange(p1,p2, widths=c(1,1))
 ```
-```{r figS02, echo=FALSE, eval=TRUE, fig.show='hold', fig.width=9, fig.height=4.5, fig.cap="__Figure S1.__ Summary of data: number of vertices per graph by hemisphere/tissue type."}
+```{r figS02, echo=FALSE, eval=TRUE, fig.show='hold', fig.width=9, fig.height=4.5, fig.cap="Figure S1. Summary of data: number of vertices per graph by hemisphere/tissue type."}
 knitr::include_graphics("figure/figS0-12.png")
 ```
 
@@ -199,20 +199,20 @@ devtools::install_github("youngser/TwoTruth")
 library(TwoTruth)
 ```
 
-```{r figS2, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S2.__ Spectral embedding dimension $\\widehat{d}$ via Zhu & Ghodsi for our 114 connectomes."}
+```{r figS2, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="Figure S2. Spectral embedding dimension $\\widehat{d}$ via Zhu & Ghodsi for our 114 connectomes."}
 knitr::include_graphics("figure/figS1-1.png")
 #source("demo/doFigS1.R")
 ```
-```{r figS3, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="__Figure S3.__ Number of clusters $\\widehat{K}$ via Mclust BIC for our 114 connectomes."}
+```{r figS3, echo=FALSE, eval=TRUE, fig.width=6, fig.height=5, fig.cap="Figure S3. Number of clusters $\\widehat{K}$ via Mclust BIC for our 114 connectomes."}
 knitr::include_graphics("figure/figS2-1.png")
 #source("demo/doFigS2.R")
 ```
 
-```{r fig6, echo=FALSE, eval=TRUE, fig.cap="__Figure 6.__ Results of the ($\\widehat{d},\\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\\widehat{d} \\in \\{30,\\dots,60\\}$ and $\\widehat{K} \\in \\{2,\\dots,20\\}$; for ASE we see $\\widehat{d} \\in \\{2,\\dots,20\\}$ and $\\widehat{K} \\in \\{10,\\dots,50\\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \\{Left,Right\\} and \\{Gray,White\\}, and shows that LSE clustering identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Our \'Two Truths\' phenomenon is conclusively demonstrated: LSE finds $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE finds $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
+```{r fig6, echo=FALSE, eval=TRUE, fig.cap="Figure 6. Results of the ($\\widehat{d},\\widehat{K}$) model selection for spectral graph clustering for each of our 114 connectomes. For LSE we see $\\widehat{d} \\in \\{30,\\dots,60\\}$ and $\\widehat{K} \\in \\{2,\\dots,20\\}$; for ASE we see $\\widehat{d} \\in \\{2,\\dots,20\\}$ and $\\widehat{K} \\in \\{10,\\dots,50\\}$. The color-coding represents clustering performance in terms of ARI for each of LSE and ASE against each of the two truths \\{Left,Right\\} and \\{Gray,White\\}, and shows that LSE clustering identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Our \'Two Truths\' phenomenon is conclusively demonstrated: LSE finds $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE finds $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
 knitr::include_graphics("figure/fig6-1.png")
 #source("demo/doFig6.R")
 ```
-```{r fig7, echo=FALSE, eval=TRUE, fig.cap="__Figure 7.__ Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\\{\\mbox{Left},\\mbox{Right}\\}$ truth against the difference in ARI for the $\\{\\mbox{Gray},\\mbox{White}\\}$ truth for the clusterings produced by each of LSE and ASE: $x$ = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. $y$ = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identified $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Marginal histograms are provided. Our 'Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
+```{r fig7, echo=FALSE, eval=TRUE, fig.cap="Figure 7. Spectral graph clustering assessment via ARI. For each of our 114 connectomes, we plot the difference in ARI for the $\\{\\mbox{Left},\\mbox{Right}\\}$ truth against the difference in ARI for the $\\{\\mbox{Gray},\\mbox{White}\\}$ truth for the clusterings produced by each of LSE and ASE: x = ARI(LSE,LR) $-$ ARI(LSE,GW) vs. y = ARI(ASE,LR) $-$ ARI(ASE,GW). A point in the $(+,-)$ quadrant indicates that for that connectome the LSE clustering identified $\\{\\mbox{Left},\\mbox{Right}\\}$ better than $\\{\\mbox{Gray},\\mbox{White}\\}$ and ASE identified $\\{\\mbox{Gray},\\mbox{White}\\}$ better than $\\{\\mbox{Left},\\mbox{Right}\\}$. Marginal histograms are provided. Our 'Two Truths' phenomenon is conclusively demonstrated: LSE identifies $\\{\\mbox{Left},\\mbox{Right}\\}$ (affinity) while ASE identifies $\\{\\mbox{Gray},\\mbox{White}\\}$ (core-periphery)."}
 knitr::include_graphics("figure/fig7-1.png")
 #source("demo/doFig7.R")
 ```
