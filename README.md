@@ -212,6 +212,11 @@ To run a simple simulation using the synthetic data based on the real 4
 x 4 `B` matrix, please do
 
     demo(simulation)
+    #   ASE-K1 ASE-K2 LSE-K1 LSE-K2
+    #LG    272      7      1    278
+    #LW      0    219      0    219
+    #RG    272      9    280      1
+    #RW      1    218    219      0
 
 Software and Hardware Information
 =================================
@@ -246,4 +251,4 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University
 
-*prepared by <youngser@jhu.edu> on Thu Nov 1 10:03:49 2018*
+*prepared by <youngser@jhu.edu> on Fri Nov 2 07:33:55 2018*

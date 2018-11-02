@@ -42,9 +42,9 @@ dmax <- 20
 emb.ase1 <- doEmbed(lcc, dmax, embed="ASE", abs="abs")
 emb.ase2 <- doEmbed(lcc, dmax, embed="ASE", abs="noabs")
 emb.ase3 <- doEmbed(lcc, dmax, embed="LSE", abs="abs")
-(elb1 <- getElbows(emb.ase1$embed$D, main=expression(paste("Elbows for ASE using ",group("|",lambda,"|")))))
-(elb2 <- getElbows(emb.ase2$embed$D, main=expression(paste("Elbows for ASE using reordered ",lambda))))
-(elb3 <- getElbows(emb.ase3$embed$D, main="Elbows for LSE"))
+#(elb1 <- getElbows(emb.ase1$embed$D, main=expression(paste("Elbows for ASE using ",group("|",lambda,"|")))))
+#(elb2 <- getElbows(emb.ase2$embed$D, main=expression(paste("Elbows for ASE using reordered ",lambda))))
+#(elb3 <- getElbows(emb.ase3$embed$D, main="Elbows for LSE"))
 
 ## ----runme
 runme <- function(X, lcc, elb, dmin=1, Kmax=10, models=NULL, emb="ASE", abs=NULL, plotbic=FALSE, mout=NULL)
@@ -56,7 +56,7 @@ runme <- function(X, lcc, elb, dmin=1, Kmax=10, models=NULL, emb="ASE", abs=NULL
 #		plot(mout$mout$df, what="BIC", legendArgs = list(cex=0.5))
 	}
 	df <- mout$df; rownames(df) <- paste0(emb,":",abs); print(round(df,3))
-	if (vcount(lcc) < 1000) {
+	if (vcount(lcc) < 1000 & plotbic) {
 		plot(mout$mout$data, type="n", xlab="", ylab="")#, xlim=range(mout$mout$data), ylim=range(mout$mout$data))
 		title(main=paste0(emb, "(",abs,"): dhat=",max(elb[1],dmin), ", Khat=",mout$mout$G,
 		  "\nARI(LR, GW, LRGW) = (",round(df$LR,2), ", ",round(df$GW,2), ", ",round(df$LRGW,2),")"), cex.main=1)
@@ -72,7 +72,10 @@ elb1 <- elb2 <- elb3 <- 2
 #models <- c("EVV","EEV","EVE","EEE","EVI","EEI","VII","EII")
 models <-  mclust.options("emModelNames")
 
-out1 <- runme(emb.ase1$embed$X, lcc, elb1, dmin, Kmax=c(2,2), models=models, emb="ASE",abs="abs")
+#out1 <- runme(emb.ase1$embed$X, lcc, elb1, dmin, Kmax=c(2,2), models=models, emb="ASE",abs="abs")
 out2 <- runme(emb.ase2$embed$X, lcc, elb2, dmin, Kmax=c(2,2), models=models, emb="ASE",abs="noabs")
 out3 <- runme(emb.ase3$embed$X, lcc, elb3, dmin, Kmax=c(2,2), models=models, emb="LSE")
+tab.ase <- table(Y=V(lcc)$Y, Yhat=out2$mout$class); colnames(tab.ase) <- paste0("ASE-K",1:2)
+tab.lse <- table(Y=V(lcc)$Y, Yhat=out3$mout$class); colnames(tab.lse) <- paste0("LSE-K",1:2)
+(df <- cbind(ASE=tab.ase, LSE=tab.lse))
 

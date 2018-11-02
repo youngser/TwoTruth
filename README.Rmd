@@ -359,6 +359,11 @@ To run a simple simulation using the synthetic data based on the real 4 x 4 `B` 
 
 ```{r sim, eval=FALSE}
 demo(simulation)
+#   ASE-K1 ASE-K2 LSE-K1 LSE-K2
+#LG    272      7      1    278
+#LW      0    219      0    219
+#RG    272      9    280      1
+#RW      1    218    219      0
 ```
 
 # Software and Hardware Information
