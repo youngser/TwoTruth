@@ -218,6 +218,13 @@ x 4 `B` matrix, please do
     #RG    272      9    280      1
     #RW      1    218    219      0
 
+<img src="figure/sim-mc2.png" alt="Histograms from the results of 100 repeat of the simulation. It is apparent that ASE separates {Gray,White} better and LSE separates {Left, Right} better." width="2700" />
+<p class="caption">
+Histograms from the results of 100 repeat of the simulation. It is
+apparent that ASE separates {Gray,White} better and LSE separates {Left,
+Right} better.
+</p>
+
 Software and Hardware Information
 =================================
 
@@ -251,4 +258,4 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University
 
-*prepared by <youngser@jhu.edu> on Fri Nov 2 07:33:55 2018*
+*prepared by <youngser@jhu.edu> on Mon Nov 5 10:47:16 2018*

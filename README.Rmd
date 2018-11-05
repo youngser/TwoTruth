@@ -365,6 +365,10 @@ demo(simulation)
 #RG    272      9    280      1
 #RW      1    218    219      0
 ```
+```{r figsim, echo=FALSE, eval=TRUE, fig.width=12, fig.height=4, fig.cap="Histograms from the results of 100 repeat of the simulation. It is apparent that ASE separates {Gray,White} better and LSE separates {Left, Right} better."}
+knitr::include_graphics("figure/sim-mc2.png")
+#source("demo/doFigS1.R")
+```
 
 # Software and Hardware Information
 

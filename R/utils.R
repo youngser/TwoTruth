@@ -84,10 +84,14 @@ getLCC <- function(g, weight="binary", thresh=0)
 #  ZG: Zhu & Ghodsi
 #  manual: manual dhat
 #  else: which(val > 2*sqrt(dmax))
-doEmbed <- function(g, dmax, embed="ASE", abs="abs", alg="ZG", plot.elbow=FALSE)
+doEmbed <- function(g, dmax, embed="ASE", abs="abs", alg="ZG", plot.elbow=FALSE, cvec=NULL)
 {
     if (embed=="ASE") {
-        emb <- embed_adjacency_matrix(g, dmax, options=list(maxiter=500000))
+        if (is.null(cvec)) {
+            emb <- embed_adjacency_matrix(g, dmax, options=list(maxiter=500000))
+        } else {
+            emb <- embed_adjacency_matrix(g, dmax, cvec=cvec, options=list(maxiter=500000))
+        }
     } else { # type="DAD" => normalized Laplacian
         emb <- embed_laplacian_matrix(g, dmax, type="DAD", options=list(maxiter=500000))
     }
