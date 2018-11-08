@@ -225,6 +225,9 @@ apparent that ASE separates {Gray,White} better and LSE separates {Left,
 Right} better.
 </p>
 
+A simulation demo writeen in Python is also available in the `demo`
+folder as a Jupyter notebook.
+
 Software and Hardware Information
 =================================
 
@@ -258,4 +261,4 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University
 
-*prepared by <youngser@jhu.edu> on Mon Nov 5 10:47:16 2018*
+*prepared by <youngser@jhu.edu> on Thu Nov 8 08:11:57 2018*

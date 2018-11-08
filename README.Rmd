@@ -370,6 +370,8 @@ knitr::include_graphics("figure/sim-mc2.png")
 #source("demo/doFigS1.R")
 ```
 
+A simulation demo writeen in Python is also available in the `demo` folder as a Jupyter notebook.
+
 # Software and Hardware Information
 
 ```{r vn,echo=TRUE, eval=FALSE}
