@@ -261,4 +261,6 @@ Carey E Priebe & Youngser Park
 Department of Applied Mathematics and Statistics  
 Johns Hopkins University
 
-*prepared by <youngser@jhu.edu> on Thu Nov 8 08:11:57 2018*
+*prepared by
+<a href="mailto:youngser@jhu.edu" class="email">youngser@jhu.edu</a> on
+Tue Nov 27 12:37:42 2018*

@@ -359,11 +359,11 @@ To run a simple simulation using the synthetic data based on the real 4 x 4 `B` 
 
 ```{r sim, eval=FALSE}
 demo(simulation)
-#   ASE-K1 ASE-K2 LSE-K1 LSE-K2
-#LG    272      7      1    278
-#LW      0    219      0    219
-#RG    272      9    280      1
-#RW      1    218    219      0
+#    ASE-K1 ASE-K2 LSE-K1 LSE-K2
+# LG      1    278      0    279
+# LW    219      0      0    219
+# RG      2    280    282      0
+# RW    219      0    219      0
 ```
 ```{r figsim, echo=FALSE, eval=TRUE, fig.width=12, fig.height=4, fig.cap="Histograms from the results of 100 repeat of the simulation. It is apparent that ASE separates {Gray,White} better and LSE separates {Left, Right} better."}
 knitr::include_graphics("figure/sim-mc2.png")
