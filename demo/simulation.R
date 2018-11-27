@@ -3,7 +3,7 @@ suppressMessages(library(igraph))
 suppressMessages(library(mclust))
 
 #load("data//B4andMore.Rdata")
-data(Bout4)
+data(Bout4Binary)
 
 (rho <- Bout4$rho)
 (tau <- Bout4$tau)
@@ -19,7 +19,7 @@ P <- B[Y,Y]
 
 ## ----genA
 set.seed(1234)
-g1 <- sample_sbm(n, B*10, rnp); summary(g1)
+g1 <- sample_sbm(n, B, rnp); summary(g1)
 
 r.names <- names(rho)
 df.v <- data.frame(v=1:n,
